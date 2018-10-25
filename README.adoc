@@ -1,0 +1,8 @@
+= DustVim
+DustVoice <info@dustvoice.de>
+
+== Purpose of life
+
+This project exists, to have my ever changing vimscript (nvim) available from everywhere and keep it clean and synced between all devices.
+
+The reason why the different distributions are in different folders instead of different branches is, because I often have to vimdiff the different files, so I have to have parallel access to the files from different distributions.
