@@ -107,8 +107,8 @@ Plug 'ap/vim-buftabline'
 if g:use_pandoc_markdown==1
     Plug 'vim-pandoc/vim-pandoc-syntax'
 endif
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'sheerun/vim-polyglot'
+Plug 'DustVoice/vim-pandoc'
+Plug 'DustVoice/vim-polyglot'
 Plug 'scrooloose/nerdtree'
 if g:use_python==1
     Plug 'dhruvasagar/vim-table-mode'
@@ -121,9 +121,9 @@ if g:use_javacomplete==1
     Plug 'artur-shaik/vim-javacomplete2'
 endif
 
-Plug 'lervag/vimtex'
+Plug 'DustVoice/vimtex'
 " Plug 'LaTeX-Box-Team/LaTeX-Box'
-Plug 'tomtom/templator_vim'
+Plug 'DustVoice/templator_vim'
 "Plug 'xuhdev/vim-latex-live-preview'
 
 if g:use_comfortable_motion==1
@@ -133,14 +133,14 @@ endif
 Plug 'ARM9/snes-syntax-vim'
 Plug 'philj56/vim-asm-indent'
 
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'thaerkh/vim-indentguides'
+"Plug 'nathanaelkane/vim-indent-guides'
+Plug 'DustVoice/vim-indentguides'
 
 " Colorschemes
 "Plug 'haishanh/night-owl.vim'
 "Plug 'BrainDeath0/Hypsteria'
 "Plug 'sts10/vim-pink-moon'
-Plug 'nightsense/snow'
+Plug 'DustVoice/snow'
 "Plug 'edouardp/myob-colorscheme'
 "Plug 'kaicataldo/material.vim'
 "Plug 'phanviet/vim-monokai-pro'
