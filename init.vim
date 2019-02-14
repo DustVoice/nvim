@@ -13,8 +13,6 @@ else
     set termguicolors
 endif
 
-tnoremap <Esc> <C-\><C-n>
-
 set mouse=a
 
 let mapleader="-"
@@ -25,8 +23,7 @@ set breakindent
 set breakindentopt=shift:4
 
 set list
-set listchars=trail:•,tab:•\ ,extends:⟩,precedes:⟨
-"set listchars=trail:·
+set listchars=trail:·,tab:•\ ,extends:⟩,precedes:⟨
 set shortmess=a
 set softtabstop=4
 set shiftwidth=4
@@ -71,14 +68,21 @@ let g:jobs=[]
 
 let g:http_server=''
 
+runtime custom.vim
+
 
 if g:use_font == 1
     set showbreak=↳
 endif
 
 call plug#begin()
-Plug 'scrooloose/nerdcommenter'
-Plug 'shime/vim-livedown'
+
+" ====================================
+" Core ===============================
+" ====================================
+if g:use_async==1
+    Plug 'skywind3000/asyncrun.vim'
+endif
 
 if g:use_sound==1
     Plug 'https://github.com/timeyyy/orchestra.nvim.git'
@@ -91,6 +95,41 @@ if g:use_airline==1
     Plug 'vim-airline/vim-airline-themes'
 endif
 
+Plug 'scrooloose/nerdcommenter'
+
+if g:use_comfortable_motion==1
+    Plug 'yuttie/comfortable-motion.vim'
+endif
+" ====================================
+
+" ====================================
+" Visualizers ========================
+" ====================================
+Plug 'ap/vim-buftabline'
+Plug 'scrooloose/nerdtree'
+Plug 'DustVoice/vim-indentguides'
+" ====================================
+
+" ====================================
+" Syntax & Custom indents ============
+" ====================================
+if g:use_pandoc_markdown==1
+    Plug 'vim-pandoc/vim-pandoc-syntax'
+endif
+Plug 'DustVoice/vim-pandoc'
+
+Plug 'DustVoice/vim-polyglot'
+
+Plug 'DustVoice/vimtex'
+
+Plug 'ARM9/snes-syntax-vim'
+
+Plug 'philj56/vim-asm-indent'
+" ====================================
+
+" ====================================
+" Autocompletion =====================
+" ====================================
 if g:use_deoplete==1
     if has('nvim')
         Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -100,99 +139,120 @@ if g:use_deoplete==1
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
 endif
-"Plug 'thaerkh/vim-indentguides'
-
-Plug 'ap/vim-buftabline'
-
-if g:use_pandoc_markdown==1
-    Plug 'vim-pandoc/vim-pandoc-syntax'
-endif
-Plug 'DustVoice/vim-pandoc'
-Plug 'DustVoice/vim-polyglot'
-Plug 'scrooloose/nerdtree'
-if g:use_python==1
-    Plug 'dhruvasagar/vim-table-mode'
-endif
-if g:use_async==1
-    Plug 'skywind3000/asyncrun.vim'
-endif
 
 if g:use_javacomplete==1
     Plug 'artur-shaik/vim-javacomplete2'
 endif
+" ====================================
 
-Plug 'DustVoice/vimtex'
-" Plug 'LaTeX-Box-Team/LaTeX-Box'
-Plug 'DustVoice/templator_vim'
-"Plug 'xuhdev/vim-latex-live-preview'
-
-if g:use_comfortable_motion==1
-    Plug 'yuttie/comfortable-motion.vim'
+" ====================================
+" Special functionality ==============
+" ====================================
+if g:use_python==1
+    Plug 'dhruvasagar/vim-table-mode'
 endif
 
-Plug 'ARM9/snes-syntax-vim'
-Plug 'philj56/vim-asm-indent'
+Plug 'shime/vim-livedown'
+" ====================================
 
-"Plug 'nathanaelkane/vim-indent-guides'
-Plug 'DustVoice/vim-indentguides'
+" Templating =========================
+Plug 'DustVoice/templator_vim'
+" ====================================
 
-" Colorschemes
-"Plug 'haishanh/night-owl.vim'
-"Plug 'BrainDeath0/Hypsteria'
-"Plug 'sts10/vim-pink-moon'
+" ====================================
+" Colorscheme ========================
+" ====================================
 Plug 'DustVoice/snow'
-"Plug 'edouardp/myob-colorscheme'
-"Plug 'kaicataldo/material.vim'
-"Plug 'phanviet/vim-monokai-pro'
-"Plug 'aradunovic/perun.vim'
-"Plug 'jacoborus/tender.vim'
-"Plug 'mkarmona/materialbox'
-"Plug 'ajmwagar/vim-deus'
-"Plug 'rhysd/vim-color-spring-night'
-"Plug 'nightsense/carbonized'
-"Plug 'nightsense/forgotten'
-"Plug 'nightsense/seagrey'
-"Plug 'nightsense/vrunchbang'
-"Plug 'mhartington/oceanic-next'
-"Plug 'rakr/vim-two-firewatch'
-"Plug 'zeis/vim-kolor'
-"Plug 'sjl/badwolf'
-"Plug 'tomasr/molokai'
-"Plug 'fmoralesc/molokayo'
-"Plug 'junegunn/seoul256.vim'
-"Plug 'w0ng/vim-hybrid'
-"Plug 'goatslacker/mango.vim'
-"Plug 'dracula/vim', { 'as': 'dracula' }
-"Plug 'morhetz/gruvbox'
-"Plug 'ayu-theme/ayu-vim'
-"Plug 'jnurmine/Zenburn'
-"Plug 'nanotech/jellybeans.vim'
-"Plug 'altercation/vim-colors-solarized'
-"Plug 'lifepillar/vim-solarized8'
-"Plug 'NLKNguyen/papercolor-theme'
+" ====================================
+
+" ====================================
+" UNUSED =============================
+" ====================================
+" Unused alternative indent guides plugin (marks line with bg)
+" Plug 'nathanaelkane/vim-indent-guides'
+
+" Unused latex plugins
+" Plug 'LaTeX-Box-Team/LaTeX-Box'
+" Plug 'xuhdev/vim-latex-live-preview'
+
+" Unused colorschemes
+" Plug 'haishanh/night-owl.vim'
+" Plug 'BrainDeath0/Hypsteria'
+" Plug 'sts10/vim-pink-moon'
+" Plug 'edouardp/myob-colorscheme'
+" Plug 'kaicataldo/material.vim'
+" Plug 'phanviet/vim-monokai-pro'
+" Plug 'aradunovic/perun.vim'
+" Plug 'jacoborus/tender.vim'
+" Plug 'mkarmona/materialbox'
+" Plug 'ajmwagar/vim-deus'
+" Plug 'rhysd/vim-color-spring-night'
+" Plug 'nightsense/carbonized'
+" Plug 'nightsense/forgotten'
+" Plug 'nightsense/seagrey'
+" Plug 'nightsense/vrunchbang'
+" Plug 'mhartington/oceanic-next'
+" Plug 'rakr/vim-two-firewatch'
+" Plug 'zeis/vim-kolor'
+" Plug 'sjl/badwolf'
+" Plug 'tomasr/molokai'
+" Plug 'fmoralesc/molokayo'
+" Plug 'junegunn/seoul256.vim'
+" Plug 'w0ng/vim-hybrid'
+" Plug 'goatslacker/mango.vim'
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'morhetz/gruvbox'
+" Plug 'ayu-theme/ayu-vim'
+" Plug 'jnurmine/Zenburn'
+" Plug 'nanotech/jellybeans.vim'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'lifepillar/vim-solarized8'
+" Plug 'NLKNguyen/papercolor-theme'
+" ====================================
 
 call plug#end()
 
+" ====================================
+" Indentguides config ================
+" ====================================
 let g:indentguides_spacechar = '•'
 let g:indentguides_tabchar = '|'
 let g:indentguides_firstlevel = 1
 
-"let g:indentguides_spacechar = '┆'
-"let g:indentguides_tabchar = '|'
+" Default indentguides characters
+" let g:indentguides_spacechar = '┆'
+" let g:indentguides_tabchar = '|'
+" ====================================
+
+" ====================================
+" When to use 'normal' tabs ==========
+" ====================================
 autocmd FileType make setlocal noexpandtab
 autocmd FileType Makefile setlocal noexpandtab
 autocmd FileType .html setlocal noexpandtab
 autocmd FileType .css setlocal noexpandtab
 autocmd FileType .php setlocal noexpandtab
+" ====================================
 
-"let g:indent_guides_enable_on_vim_startup = 1
-"let g:indent_guides_start_level = 2
-"let g:indent_guides_guide_size = 1
+" ====================================
+" indent_guides config ===============
+" ====================================
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_start_level = 2
+" let g:indent_guides_guide_size = 1
+" ====================================
 
-"colorscheme badwolf
+" ====================================
+" Colorscheme ========================
+" ====================================
 colorscheme snow
+" ====================================
 
-"autocmd SwapExists * let v:swapchoice="o"
+" ====================================
+" Function to delete a 'stuck' =======
+" swap file for the current buffer ===
+" ====================================
+" autocmd SwapExists * let v:swapchoice="o"
 function! DeleteFileSwaps()
     write
     let l:output = ''
@@ -214,12 +274,7 @@ function! DeleteFileSwaps()
     echo "Reset swap file extension for file: ".expand('%')
 endfunction
 command! DeleteFileSwaps :call DeleteFileSwaps()
-
-command! W write
-
-nnoremap <silent> <leader>cd :lcd %:p:h<CR>
-
-tnoremap <Esc> <C-\><C-n>
+" ====================================
 
 if g:use_comfortable_motion==1
     let g:comfortable_motion_no_default_key_mappings = 1
@@ -785,33 +840,6 @@ function! ConvertMarkdownToAsciidoc()
     execute("%s/image:\\(.\\{-}\\) ".\\{-}"\\[/image:\\1[/gc")
 endfunction
 
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-nnoremap <leader>+ <C-W>+
-nnoremap <leader>- <C-W>-
-nnoremap <leader>< <C-W><
-nnoremap <leader>> <C-W>>
-nnoremap <leader>_ <C-W>_
-nnoremap <leader><BAR> <C-W><BAR>
-nnoremap <leader>= <C-W>=
-nnoremap <leader>T <C-W>T
-
-nnoremap <leader>e :e<Space>
-nnoremap <leader>t :tabe<Space>
-
-set splitbelow
-set splitright
-
-nmap gB :buffers<CR>
-nmap gb :buffer<Space>
-
-nnoremap § `
-
-filetype plugin on
-syntax on
-
 
 " vimwiki stuff "
 " Run multiple wikis "
@@ -1100,6 +1128,75 @@ function! ReadFolds()
 endfunction
 
 let g:vimtex_fold_enabled=1
+"
+"
+" ====================================
+" General maps                ========
+" (at the bottom to overwrite ========
+" everything)                 ========
+" ====================================
+command! W write
+
+set incsearch
+
+set clipboard=unnamedplus
+
+nnoremap <silent> <leader>cd :lcd %:p:h<CR>
+
+tnoremap <Esc> <C-\><C-n>
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <leader>+ <C-W>+
+nnoremap <leader>- <C-W>-
+nnoremap <leader>< <C-W><
+nnoremap <leader>> <C-W>>
+nnoremap <leader>_ <C-W>_
+nnoremap <leader><BAR> <C-W><BAR>
+nnoremap <leader>= <C-W>=
+nnoremap <leader>T <C-W>T
+
+nnoremap <leader>e :e<Space>
+nnoremap <leader>t :tabe<Space>
+
+set splitbelow
+set splitright
+
+nmap gB :buffers<CR>
+nmap gb :buffer<Space>
+
+nnoremap § `
+
+filetype plugin on
+syntax on
+
+
+nmap <leader>h :noh<CR>
+
+nmap <leader>. :bnext<CR>
+nmap <leader>, :bprev<CR>
+
+inoremap <F3>p unique_ptr<><ESC>i
+nnoremap <F3>p iunique_ptr<><ESC>i
+
+inoremap <F3>m make_unique<><ESC>i
+noremap <F3>m imake_unique<><ESC>i
+" ====================================
+
+
+" ====================================
+" Important that this  ===============
+" is the last command! ===============
+" ====================================
+set background=dark
+" ====================================
+
+
+" ====================================
+" Deactivated shit ===================
+" ====================================
 "if g:manual_fold_autoload==1
 "set foldmethod=manual
 "autocmd BufWinLeave,WinLeave,BufWritePost * call SaveFolds()
@@ -1112,22 +1209,6 @@ let g:vimtex_fold_enabled=1
 ""set foldclose=all
 "endif
 
-nmap <leader>fw :call WriteFolds()<CR>
+" nmap <leader>fw :call WriteFolds()<CR>
 " nmap <leader>fl :source expand('%:r') . ".fold"<CR>
 
-set incsearch
-
-set clipboard=unnamedplus
-
-nmap <leader>h :noh<CR>
-
-nmap <leader>. :bnext<CR>
-nmap <leader>, :bprev<CR>
-
-inoremap <F3>p unique_ptr<><ESC>i
-nnoremap <F3>p iunique_ptr<><ESC>i
-
-inoremap <F3>m make_unique<><ESC>i
-noremap <F3>m imake_unique<><ESC>i
-
-set background=dark
