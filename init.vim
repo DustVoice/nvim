@@ -34,16 +34,13 @@ set diffopt=filler,vertical
 
 let g:use_utf8=1
 
-let g:use_autocomplete=0
+let g:use_autocomplete=1
+let g:ycm_clang = ''
+let g:ycm_java = ''
 
-if g:platform ==? "windows" || g:platform ==? "windows_portable"
-    let g:use_autocomplete = 3
+if g:use_autocomplete == 3
     let g:ycm_clang = ' --clang-completer' " or '--clangd-completer' or ''
     let g:ycm_java = ' --java-completer' " or ''
-else
-    let g:use_autocomplete = 1
-    let g:ycm_clang = ''
-    let g:ycm_java = ''
 endif
 
 let g:use_javacomplete=0
@@ -65,7 +62,6 @@ if g:use_utf8 == 1
     set encoding=utf-8
 endif
 
-let g:use_deoplete=1
 let g:use_pandoc_markdown=1
 let g:compile_on_save=0
 let g:open_pdf=0
@@ -155,7 +151,7 @@ Plug 'tpope/vim-fugitive'
 " Autocompletion =====================
 " ====================================
 if g:use_autocomplete == 1
-    Plug 'ajh17/VimCompletesMe'
+    Plug 'DustVoice/VimCompletesMe'
 elseif g:use_autocomplete == 2
     if has('nvim')
         Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
