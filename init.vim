@@ -37,11 +37,11 @@ let g:use_utf8=1
 let g:use_autocomplete=0
 
 if g:platform ==? "windows" || g:platform ==? "windows_portable"
-    let g:use_autocomplete == 3
+    let g:use_autocomplete = 3
     let g:ycm_clang = ' --clang-completer' " or '--clangd-completer' or ''
     let g:ycm_java = ' --java-completer' " or ''
 else
-    let g:use_autocomplete == 1
+    let g:use_autocomplete = 1
     let g:ycm_clang = ''
     let g:ycm_java = ''
 endif
