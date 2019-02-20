@@ -1,2 +1,3 @@
 "Here you can define your own custom settings like
 "let g:use_sound = 1
+"let g:use_autocomplete = 2

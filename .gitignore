@@ -1,2 +1,5 @@
 .netrwhist
 platform.vim
+custom.vim
+plugged/*
+plugged_bak

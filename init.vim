@@ -32,6 +32,20 @@ set smartindent
 set autoindent
 set diffopt=filler,vertical
 
+let g:use_utf8=1
+
+let g:use_autocomplete=0
+
+if g:platform ==? "windows" || g:platform ==? "windows_portable"
+    let g:use_autocomplete == 3
+    let g:ycm_clang = ' --clang-completer' " or '--clangd-completer' or ''
+    let g:ycm_java = ' --java-completer' " or ''
+else
+    let g:use_autocomplete == 1
+    let g:ycm_clang = ''
+    let g:ycm_java = ''
+endif
+
 let g:use_javacomplete=0
 
 let g:use_comfortable_motion=0
@@ -45,6 +59,10 @@ if g:platform ==? "windows_portable"
     let g:use_font = 0
 else
     let g:use_font = 1
+endif
+
+if g:use_utf8 == 1
+    set encoding=utf-8
 endif
 
 let g:use_deoplete=1
@@ -128,9 +146,17 @@ Plug 'philj56/vim-asm-indent'
 " ====================================
 
 " ====================================
+" Git ================================
+" ====================================
+Plug 'tpope/vim-fugitive'
+" ====================================
+
+" ====================================
 " Autocompletion =====================
 " ====================================
-if g:use_deoplete==1
+if g:use_autocomplete == 1
+    Plug 'ajh17/VimCompletesMe'
+elseif g:use_autocomplete == 2
     if has('nvim')
         Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     else
@@ -138,6 +164,8 @@ if g:use_deoplete==1
         Plug 'roxma/nvim-yarp'
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
+elseif g:use_autocomplete == 3
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' . g:ycm_clang . g:ycm_java }
 endif
 
 if g:use_javacomplete==1
