@@ -34,7 +34,7 @@ set diffopt=filler,vertical
 
 let g:use_utf8=1
 
-let g:use_autocomplete=1
+let g:use_autocomplete=2
 let g:ycm_clang = ''
 let g:ycm_java = ''
 
@@ -388,6 +388,7 @@ endif
 if g:use_javacomplete==1
     autocmd FileType java setlocal omnifunc=javacomplete#Complete
 endif
+
 if g:use_autocomplete==2
     let g:deoplete#enable_at_startup = 1
 endif
