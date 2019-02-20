@@ -388,7 +388,7 @@ endif
 if g:use_javacomplete==1
     autocmd FileType java setlocal omnifunc=javacomplete#Complete
 endif
-if g:use_deoplete==1
+if g:use_autocomplete==2
     let g:deoplete#enable_at_startup = 1
 endif
 
