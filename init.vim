@@ -3,9 +3,7 @@ set nocompatible
 runtime platform.vim
 
 if g:platform ==? "linux"
-    if g:platform ==? "termux"
-        set notermguicolors
-    endif
+    set notermguicolors
 
     autocmd VimLeave * set guicursor=a:ver35-blinkon0
     set guicursor=
