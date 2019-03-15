@@ -120,6 +120,7 @@ endif
 Plug 'ap/vim-buftabline'
 Plug 'scrooloose/nerdtree'
 Plug 'DustVoice/vim-indentguides'
+Plug 'qpkorr/vim-bufkill'
 " ====================================
 
 " ====================================
