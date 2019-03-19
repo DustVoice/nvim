@@ -32,7 +32,7 @@ set diffopt=filler,vertical
 
 let g:use_utf8=1
 
-let g:use_autocomplete=2
+let g:use_autocomplete=1
 let g:ycm_clang = ''
 let g:ycm_java = ''
 
