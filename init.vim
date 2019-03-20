@@ -80,6 +80,8 @@ let g:jobs=[]
 
 let g:http_server=''
 
+let g:use_clang_format=0
+
 runtime custom.vim
 
 
@@ -138,6 +140,10 @@ Plug 'DustVoice/vimtex'
 Plug 'ARM9/snes-syntax-vim'
 
 Plug 'philj56/vim-asm-indent'
+
+if g:use_clang_format==1
+    Plug 'rhysd/vim-clang-format'
+endif
 " ====================================
 
 " ====================================
@@ -236,6 +242,21 @@ Plug 'DustVoice/snow'
 call plug#end()
 
 " ====================================
+" clang-format =======================
+" ====================================
+if g:use_clang_format==1
+    let g:clang_format#detect_style_file = 1
+    let g:clang_format#enable_fallback_style = 0
+
+    autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+    autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+
+    autocmd FileType c,cpp,objc let g:clang_format#auto_format = 1
+    autocmd FileType c,cpp,objc let g:clang_format#auto_format_on_insert_leave = 0
+endif
+" ====================================
+
+" ====================================
 " Indentguides config ================
 " ====================================
 let g:indentguides_spacechar = '•'
@@ -287,7 +308,7 @@ function! DeleteFileSwaps()
     let l:swap_files = split(glob(l:base.'\.s*'))
     " delete all except the current swap file
     for l:swap_file in l:swap_files
-        if !empty(glob(l:swap_file)) && l:swap_file != l:current_swap_file 
+        if !empty(glob(l:swap_file)) && l:swap_file != l:current_swap_file
             call delete(l:swap_file)
             echo "swap file removed: ".l:swap_file
         endif
