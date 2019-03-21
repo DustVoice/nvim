@@ -82,6 +82,10 @@ let g:http_server=''
 
 let g:use_clang_format=0
 
+let g:ycm_filetype_whitelist = {'cpp': 1}
+let g:ycm_confirm_extra_conf = 0
+
+
 runtime custom.vim
 
 
@@ -166,7 +170,8 @@ elseif g:use_autocomplete == 2
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
 elseif g:use_autocomplete == 3
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' . g:ycm_clang . g:ycm_java }
+    "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' . g:ycm_clang . g:ycm_java }
+    Plug 'Valloric/YouCompleteMe'
 endif
 
 if g:use_javacomplete==1
