@@ -148,6 +148,9 @@ Plug 'philj56/vim-asm-indent'
 if g:use_clang_format==1
     Plug 'rhysd/vim-clang-format'
 endif
+
+Plug 'derekwyatt/vim-fswitch'
+
 " ====================================
 
 " ====================================
@@ -417,6 +420,19 @@ endif
 if g:use_autocomplete==2
     let g:deoplete#enable_at_startup = 1
 endif
+
+if g:use_autocomplete == 3
+    nnoremap <leader>ygg :YcmCompleter GoToImprecise<CR>
+    nnoremap <leader>yg :YcmCompleter GoTo<CR>
+    nnoremap <leader>ytt :YcmCompleter GetTypeImprecise<CR>
+    nnoremap <leader>yt :YcmCompleter GetType<CR>
+    nnoremap <leader>yq :YcmCompleter FixIt<CR>
+    nnoremap <leader>ydd :YcmCompleter GetDoc<CR>
+    nnoremap <leader>yd :YcmCompleter GetDocImprecise<CR>
+    nnoremap <leader>yv :YcmDiags<CR>
+endif
+
+nnoremap <leader>s :FSHere<CR>
 
 if g:use_python == 1
     let g:table_mode_corner_corner='+'
@@ -1082,7 +1098,7 @@ command! StartHttp call StartHttp()
 command! StopHttp call StopHttp()
 command! ToggleHttp call ToggleHttp()
 
-map <leader>s :ToggleHttp<CR>
+"map <leader>s :ToggleHttp<CR>
 
 function! CodeBlock()
     let val = input('Choose your coding language - leave blank for no syntax-highlighting: ')
