@@ -1207,7 +1207,8 @@ set incsearch
 
 set clipboard=unnamedplus
 
-nnoremap <silent> <leader>cd :lcd %:p:h<CR>
+nnoremap <silent> <leader>cd :cd %:p:h<CR>
+nnoremap <silent> <leader>CD :lcd %:p:h<CR>
 
 tnoremap <Esc> <C-\><C-n>
 
