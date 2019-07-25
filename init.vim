@@ -144,7 +144,7 @@ Plug 'DustVoice/vim-polyglot'
 
 Plug 'DustVoice/vimtex'
 
-Plug 'ARM9/snes-syntax-vim'
+Plug 'ARM9/arm-syntax-vim'
 
 Plug 'philj56/vim-asm-indent'
 
