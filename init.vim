@@ -1255,6 +1255,7 @@ inoremap <F3>m make_unique<><ESC>i
 noremap <F3>m imake_unique<><ESC>i
 " ====================================
 
+nmap <leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
 " ====================================
 " Important that this  ===============

@@ -127,7 +127,7 @@ hi Terminal ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE guisp=NONE cterm=NON
 hi Title ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE guisp=NONE cterm=NONE,bold gui=NONE,bold
 hi Underlined ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE guisp=NONE cterm=NONE,underline gui=NONE,underline
 hi Comment ctermfg=67 ctermbg=NONE guifg=#65758c guibg=NONE guisp=NONE cterm=NONE gui=NONE
-hi CursorLineNr ctermfg=86 ctermbg=NONE guifg=#64ffda guibg=NONE guisp=NONE cterm=NONE gui=NONE
+hi CursorLineNr ctermfg=164 ctermbg=NONE guifg=#d700d7 guibg=NONE guisp=NONE cterm=NONE gui=NONE
 hi LineNr ctermfg=67 ctermbg=NONE guifg=#65758c guibg=NONE guisp=NONE cterm=NONE gui=NONE
 hi FoldColumn ctermfg=24 ctermbg=NONE guifg=#48586d guibg=NONE guisp=NONE cterm=NONE gui=NONE
 hi PmenuSel ctermfg=24 ctermbg=231 guifg=#48586d guibg=#f9fbff guisp=NONE cterm=NONE,reverse gui=NONE,reverse
