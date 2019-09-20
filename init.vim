@@ -16,8 +16,8 @@ endif
 
 set mouse=a
 
-let mapleader="-"
-let maplocalleader="-"
+let mapleader=" "
+let maplocalleader=" "
 
 set wrap linebreak nolist
 set breakindent
@@ -429,10 +429,9 @@ if g:use_autocomplete == 3
     nnoremap <leader>yg :YcmCompleter GoTo<CR>
     nnoremap <leader>ytt :YcmCompleter GetTypeImprecise<CR>
     nnoremap <leader>yt :YcmCompleter GetType<CR>
-    nnoremap <leader>yq :YcmCompleter FixIt<CR>
-    nnoremap <leader>ydd :YcmCompleter GetDoc<CR>
-    nnoremap <leader>yd :YcmCompleter GetDocImprecise<CR>
-    nnoremap <leader>yv :YcmDiags<CR>
+    nnoremap <leader>yf :YcmCompleter FixIt<CR>
+    nnoremap <leader>yd :YcmDiags<CR>
+    nnoremap <leader>yy :YcmCompleter<Space>
 endif
 
 nnoremap <leader>s :FSHere<CR>
