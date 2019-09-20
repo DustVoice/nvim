@@ -128,7 +128,6 @@ endif
 " ====================================
 Plug 'ap/vim-buftabline'
 Plug 'scrooloose/nerdtree'
-Plug 'DustVoice/vim-indentguides'
 Plug 'qpkorr/vim-bufkill'
 " ====================================
 
@@ -147,6 +146,8 @@ Plug 'DustVoice/vimtex'
 Plug 'ARM9/arm-syntax-vim'
 
 Plug 'philj56/vim-asm-indent'
+
+Plug 'DustVoice/vim-indentguides'
 
 if g:use_clang_format==1
     Plug 'rhysd/vim-clang-format'
@@ -265,6 +266,18 @@ if g:use_clang_format==1
     autocmd FileType c,cpp,objc let g:clang_format#auto_format = 1
     autocmd FileType c,cpp,objc let g:clang_format#auto_format_on_insert_leave = 0
 endif
+" ====================================
+
+" ====================================
+" arm-assembly =======================
+" ====================================
+function! SetupArm()
+    execute('set filetype=arm')
+    execute('IndentGuidesToggle')
+    execute('IndentGuidesToggle')
+endfunction
+
+au BufNewFile,BufRead *.s,*.S call SetupArm() " arm = armv6/7
 " ====================================
 
 " ====================================
