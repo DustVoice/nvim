@@ -1265,6 +1265,47 @@ nnoremap <F3>p iunique_ptr<><ESC>i
 
 inoremap <F3>m make_unique<><ESC>i
 noremap <F3>m imake_unique<><ESC>i
+
+function! CPP_Include_Guard()
+    let guard_name = input("Please input the guard name:\n")
+    if guard_name != ""
+        execute("normal! mZ")
+        execute("normal! gg")
+        if getline(".") =~ "\."
+            execute("normal! O")
+        endif
+        execute("normal! O#ifndef " . guard_name)
+        execute("normal! o#define " . guard_name)
+        execute("normal! G")
+        if getline(".") =~ "\."
+            execute("normal! o")
+        endif
+        execute("normal! o#endif")
+        execute("normal! `Z")
+    endif
+endfunction
+
+function! CPP_Comment_File()
+    let file_desc = input("Please input a short file description:\n")
+    if file_desc != ""
+        execute("normal! mZ")
+        execute("normal! O/**")
+        execute("normal! o")
+        execute("normal! S	@file " . expand("%:t"))
+        execute("normal! o@author DustVoice")
+        execute("normal! o")
+        execute("normal! o@class DustVoice")
+        execute("normal! o")
+        execute("normal! o" . file_desc)
+        execute("normal! o*/")
+        execute("normal! <<")
+        execute("normal! `Z")
+    endif
+endfunction
+
+command! CppIncludeGuard :call CPP_Include_Guard()
+command! CppCommentFile :call CPP_Comment_File()
+
 " ====================================
 
 nmap <leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
