@@ -10,6 +10,10 @@ if g:platform ==? "linux"
     let &t_SI = "\<esc>[5 q"  " blinking I-beam in insert mode
     let &t_SR = "\<esc>[3 q"  " blinking underline in replace mode
     let &t_EI = "\<esc>[ q"  " default cursor (usually blinking block) otherwise
+elseif g:platform ==? "xterm"
+    set notermguicolors
+    set guicursor=
+    set t_Co=
 else
     set termguicolors
 endif
