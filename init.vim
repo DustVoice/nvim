@@ -440,11 +440,20 @@ endif
 if g:use_autocomplete == 3
     nnoremap <leader>ygg :YcmCompleter GoToImprecise<CR>
     nnoremap <leader>yg :YcmCompleter GoTo<CR>
+
     nnoremap <leader>ytt :YcmCompleter GetTypeImprecise<CR>
     nnoremap <leader>yt :YcmCompleter GetType<CR>
+
+    nnoremap <leader>ydd :YcmCompleter GetDocImprecise<CR>
+    nnoremap <leader>yd :YcmCompleter GetDoc<CR>
+
     nnoremap <leader>yf :YcmCompleter FixIt<CR>
-    nnoremap <leader>yd :YcmDiags<CR>
+
+    nnoremap <leader>yq :YcmDiags<CR>
+
     nnoremap <leader>yy :YcmCompleter<Space>
+
+    nnoremap <leader>yr :YcmRestartServer<CR>
 endif
 
 nnoremap <leader>s :FSHere<CR>
@@ -1288,14 +1297,17 @@ endfunction
 function! CPP_Comment_File()
     let file_desc = input("Please input a short file description:\n")
     if file_desc != ""
+        let class_name = input("Please input a class name or leave empty:\n")
         execute("normal! mZ")
         execute("normal! O/**")
         execute("normal! o")
         execute("normal! S	@file " . expand("%:t"))
         execute("normal! o@author DustVoice")
         execute("normal! o")
-        execute("normal! o@class DustVoice")
-        execute("normal! o")
+        if class_name != ""
+            execute("normal! o@class " . class_name)
+            execute("normal! o")
+        endif
         execute("normal! o" . file_desc)
         execute("normal! o*/")
         execute("normal! <<")
@@ -1303,8 +1315,21 @@ function! CPP_Comment_File()
     endif
 endfunction
 
+function! CPP_Comment_Method()
+    let func_desc = input("Please input a short function description:\n")
+    if func_desc != ""
+        execute("normal! O/**")
+        execute("normal! o")
+        execute("normal! S	" . func_desc)
+        execute("normal! o*/")
+        execute("normal! <<")
+        execute("normal! k$")
+    endif
+endfunction
+
 command! CppIncludeGuard :call CPP_Include_Guard()
 command! CppCommentFile :call CPP_Comment_File()
+command! CppCommentMethod :call CPP_Comment_Method()
 
 " ====================================
 
