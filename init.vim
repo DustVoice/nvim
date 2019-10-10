@@ -1335,6 +1335,12 @@ command! CppIncludeGuard :call CPP_Include_Guard()
 command! CppCommentFile :call CPP_Comment_File()
 command! CppCommentMethod :call CPP_Comment_Method()
 
+let b:current_syntax = "custom"
+
+syntax keyword cppCustomNamespace juce
+
+hi def link cppCustomNamespace Constant
+
 " ====================================
 
 nmap <leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
