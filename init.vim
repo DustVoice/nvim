@@ -1338,6 +1338,7 @@ command! CppCommentMethod :call CPP_Comment_Method()
 let b:current_syntax = "custom"
 
 syntax keyword cppCustomNamespace juce
+syntax keyword cppCustomNamespace PDFHummus
 
 hi def link cppCustomNamespace Constant
 
