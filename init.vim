@@ -1293,7 +1293,7 @@ function! CPP_Include_Guard()
         if getline(".") =~ "\."
             execute("normal! o")
         endif
-        execute("normal! o#endif")
+        execute("normal! o#endif // " . guard_name)
         execute("normal! `Z")
     endif
 endfunction
