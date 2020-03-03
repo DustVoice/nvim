@@ -153,6 +153,8 @@ Plug 'philj56/vim-asm-indent'
 
 Plug 'DustVoice/vim-indentguides'
 
+Plug 'kovetskiy/sxhkd-vim'
+
 if g:use_clang_format==1
     Plug 'rhysd/vim-clang-format'
 endif
