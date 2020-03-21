@@ -1,5 +1,8 @@
 set nocompatible
 
+" ===
+" Platform specific settings. Configure your platform in platform.vim, in this dir.
+" ===
 runtime platform.vim
 
 if g:platform ==? "linux"
@@ -17,12 +20,24 @@ elseif g:platform ==? "xterm"
 else
     set termguicolors
 endif
+" ===
 
-set mouse=a
-
+" ===
+" Choose the mapleaders, in my case the spacebar.
+" ===
 let mapleader=" "
 let maplocalleader=" "
+" ===
 
+" ===
+" Enable mouse support
+" ===
+set mouse=a
+" ===
+
+" ===
+" Set basic options
+" ===
 set wrap linebreak nolist
 set breakindent
 set breakindentopt=shift:4
@@ -37,26 +52,97 @@ set smartindent
 set autoindent
 set diffopt=filler,vertical
 
-let g:use_utf8=1
+set number
+set relativenumber
+
+set ignorecase
+set smartcase
+set backspace=indent,eol,start
+set confirm
+
+set splitbelow
+set splitright
+
+set incsearch
+
+set clipboard=unnamedplus
+
+filetype plugin on
+syntax on
+" ===
+
+" ===
+" Set config variables, in order to change options by only modifying these variable values.
+" Sometimes this can also change the plugins used/needed.
+" ===
+let g:use_utf8 = 1
 
 let g:use_autocomplete=1
 let g:ycm_clang = ''
 let g:ycm_java = ''
 
-if g:use_autocomplete == 3
-    let g:ycm_clang = ' --clang-completer' " or '--clangd-completer' or ''
-    let g:ycm_java = ' --java-completer' " or ''
-endif
+let g:use_javacomplete = 0
 
-let g:use_javacomplete=0
+let g:use_comfortable_motion = 0
 
-let g:use_comfortable_motion=0
+let g:use_python = 1
+let g:use_async = 1
+let g:use_airline = 1
+let g:use_sound = 0
 
-let g:use_python=1
-let g:use_async=1
-let g:use_airline=1
-let g:use_sound=0
+let g:tex_indent_items = 0
+let g:tex_items = ''
 
+let g:manual_fold_autoload = 1
+
+let g:jobs = []
+
+let g:http_server = ''
+
+let g:use_clang_format = 0
+
+let g:ycm_filetype_whitelist = {'cpp': 1}
+let g:ycm_confirm_extra_conf = 0
+
+let g:use_pandoc = 0
+let g:use_polyglot = 1
+let g:use_vimtex = 0
+let g:use_arm_syntax = 0
+
+let g:use_nerdcommenter = 1
+
+let g:use_buftabline = 1
+let g:use_nerdtree = 1
+let g:use_bufkill = 1
+
+let g:use_asm_indent = 1
+let g:use_indentguides = 1
+let g:use_sxhkd = 1
+let g:use_fswitch = 1
+let g:use_fugitive = 1
+
+let g:use_livedown = 0
+
+let g:use_templator = 0
+
+let g:use_latexmk = 0
+
+let g:use_asciidoctor = 1
+
+let g:use_cpp = 1
+" ===
+
+" ===
+" As the previous settings should be seen as 'default' settings, we prvoide a
+" way to set custom values for these.
+" Here we load them.
+" ===
+runtime custom.vim
+" ===
+
+" ===
+" Now these settings get applied.
+" ===
 if g:platform ==? "windows_portable"
     let g:use_font = 0
 else
@@ -67,111 +153,115 @@ if g:use_utf8 == 1
     set encoding=utf-8
 endif
 
-let g:use_pandoc_markdown=1
-let g:compile_on_save=0
-let g:open_pdf=0
-let g:pdf_viewer="sumatrapdf"
-let g:pandoc_output="pandoc_output"
-let g:pandoc_default="md-to-pdf"
-let g:latexmk_use=1
-let g:latexmk_clean=1
-let g:latex_use_outdir=0
-let g:latex_outdir="output"
-
-let g:tex_indent_items=0
-let g:tex_items=''
-
-let g:manual_fold_autoload=1
-
-let g:jobs=[]
-
-let g:http_server=''
-
-let g:use_clang_format=0
-
-let g:ycm_filetype_whitelist = {'cpp': 1}
-let g:ycm_confirm_extra_conf = 0
-
-
-runtime custom.vim
-
+if g:use_autocomplete == 3
+    let g:ycm_clang = ' --clang-completer' " or '--clangd-completer' or ''
+    let g:ycm_java = ' --java-completer' " or ''
+endif
 
 if g:use_font == 1
     set showbreak=↳
 endif
+" ===
 
+" ===
+" Begin vim-plug section
+" ===
 call plug#begin()
+" ===
 
-" ====================================
-" Core ===============================
-" ====================================
-if g:use_async==1
+" ===
+" Core
+" ===
+if g:use_async == 1
     Plug 'skywind3000/asyncrun.vim'
 endif
 
-if g:use_sound==1
+if g:use_sound == 1
     Plug 'https://github.com/timeyyy/orchestra.nvim.git'
     Plug 'https://github.com/timeyyy/bubbletrouble.symphony.git'
     Plug 'https://github.com/timeyyy/clackclack.symphony'
 endif
 
-if g:use_airline==1
+if g:use_airline == 1
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 endif
 
-Plug 'scrooloose/nerdcommenter'
-
-if g:use_comfortable_motion==1
+if g:use_comfortable_motion == 1
     Plug 'yuttie/comfortable-motion.vim'
 endif
-" ====================================
 
-" ====================================
-" Visualizers ========================
-" ====================================
-Plug 'ap/vim-buftabline'
-Plug 'scrooloose/nerdtree'
-Plug 'qpkorr/vim-bufkill'
-" ====================================
+if g:use_nerdcommenter == 1
+    Plug 'scrooloose/nerdcommenter'
+endif
+" ===
 
-" ====================================
-" Syntax & Custom indents ============
-" ====================================
-if g:use_pandoc_markdown==1
+" ===
+" Visualizers
+" ===
+if g:use_buftabline == 1
+    Plug 'ap/vim-buftabline'
+endif
+if g:use_nerdtree == 1
+    Plug 'scrooloose/nerdtree'
+endif
+if g:use_bufkill == 1
+    Plug 'qpkorr/vim-bufkill'
+endif
+" ===
+
+" ===
+" Syntax & Custom indents
+" ===
+if g:use_pandoc == 1
+    Plug 'vim-pandoc/vim-pandoc'
     Plug 'vim-pandoc/vim-pandoc-syntax'
 endif
-Plug 'DustVoice/vim-pandoc'
 
-Plug 'DustVoice/vim-polyglot'
+if g:use_polyglot == 1
+    Plug 'sheerun/vim-polyglot'
+endif
 
-Plug 'DustVoice/vimtex'
+if g:use_vimtex == 1
+    Plug 'lervag/vimtex'
+endif
 
-Plug 'ARM9/arm-syntax-vim'
+if g:use_arm_syntax == 1
+    Plug 'ARM9/arm-syntax-vim'
+endif
 
-Plug 'philj56/vim-asm-indent'
+if g:use_asm_indent == 1
+    Plug 'philj56/vim-asm-indent'
+endif
 
-Plug 'DustVoice/vim-indentguides'
+if g:use_indentguides == 1
+    Plug 'DustVoice/vim-indentguides'
+endif
 
-Plug 'kovetskiy/sxhkd-vim'
+if g:use_sxhkd == 1
+    Plug 'kovetskiy/sxhkd-vim'
+endif
 
 if g:use_clang_format==1
     Plug 'rhysd/vim-clang-format'
 endif
 
-Plug 'derekwyatt/vim-fswitch'
+if g:use_fswitch == 1
+    Plug 'derekwyatt/vim-fswitch'
+endif
+" ===
 
-" ====================================
+" ===
+" Git
+" ===
+if g:use_fugitive == 1
+    Plug 'tpope/vim-fugitive'
+endif
+" ===
 
-" ====================================
-" Git ================================
-" ====================================
-Plug 'tpope/vim-fugitive'
-" ====================================
-
-" ====================================
-" Autocompletion =====================
-" ====================================
+" ===
+" Autocompletion
+" ===
 if g:use_autocomplete == 1
     Plug 'DustVoice/VimCompletesMe'
 elseif g:use_autocomplete == 2
@@ -183,86 +273,50 @@ elseif g:use_autocomplete == 2
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
 elseif g:use_autocomplete == 3
-    "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' . g:ycm_clang . g:ycm_java }
     Plug 'Valloric/YouCompleteMe'
 endif
 
-if g:use_javacomplete==1
+if g:use_javacomplete == 1
     Plug 'artur-shaik/vim-javacomplete2'
 endif
-" ====================================
+" ===
 
-" ====================================
-" Special functionality ==============
-" ====================================
-if g:use_python==1
+" ===
+" Special functionality
+" ===
+if g:use_python == 1
     Plug 'dhruvasagar/vim-table-mode'
 endif
 
-Plug 'shime/vim-livedown'
-" ====================================
+if g:use_livedown == 1
+    Plug 'shime/vim-livedown'
+endif
+" ===
 
-" Templating =========================
-Plug 'DustVoice/templator_vim'
-" ====================================
+" ===
+" Templating
+" ===
+if g:use_templator == 1
+    Plug 'DustVoice/templator_vim'
+endif
+" ===
 
-" ====================================
-" Colorscheme ========================
-" ====================================
+" ===
+" Colorscheme
+" ===
 Plug 'DustVoice/snow'
-" ====================================
+" ===
 
-" ====================================
-" UNUSED =============================
-" ====================================
-" Unused alternative indent guides plugin (marks line with bg)
-" Plug 'nathanaelkane/vim-indent-guides'
-
-" Unused latex plugins
-" Plug 'LaTeX-Box-Team/LaTeX-Box'
-" Plug 'xuhdev/vim-latex-live-preview'
-
-" Unused colorschemes
-" Plug 'haishanh/night-owl.vim'
-" Plug 'BrainDeath0/Hypsteria'
-" Plug 'sts10/vim-pink-moon'
-" Plug 'edouardp/myob-colorscheme'
-" Plug 'kaicataldo/material.vim'
-" Plug 'phanviet/vim-monokai-pro'
-" Plug 'aradunovic/perun.vim'
-" Plug 'jacoborus/tender.vim'
-" Plug 'mkarmona/materialbox'
-" Plug 'ajmwagar/vim-deus'
-" Plug 'rhysd/vim-color-spring-night'
-" Plug 'nightsense/carbonized'
-" Plug 'nightsense/forgotten'
-" Plug 'nightsense/seagrey'
-" Plug 'nightsense/vrunchbang'
-" Plug 'mhartington/oceanic-next'
-" Plug 'rakr/vim-two-firewatch'
-" Plug 'zeis/vim-kolor'
-" Plug 'sjl/badwolf'
-" Plug 'tomasr/molokai'
-" Plug 'fmoralesc/molokayo'
-" Plug 'junegunn/seoul256.vim'
-" Plug 'w0ng/vim-hybrid'
-" Plug 'goatslacker/mango.vim'
-" Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'morhetz/gruvbox'
-" Plug 'ayu-theme/ayu-vim'
-" Plug 'jnurmine/Zenburn'
-" Plug 'nanotech/jellybeans.vim'
-" Plug 'altercation/vim-colors-solarized'
-" Plug 'lifepillar/vim-solarized8'
-" Plug 'NLKNguyen/papercolor-theme'
-" ====================================
-
+" ===
+" End vim-plug section
+" ===
 call plug#end()
+" ===
 
-" ====================================
-" clang-format =======================
-" ====================================
-if g:use_clang_format==1
+" ===
+" clang-format
+" ===
+if g:use_clang_format == 1
     let g:clang_format#detect_style_file = 1
     let g:clang_format#enable_fallback_style = 0
 
@@ -272,11 +326,11 @@ if g:use_clang_format==1
     autocmd FileType c,cpp,objc let g:clang_format#auto_format = 1
     autocmd FileType c,cpp,objc let g:clang_format#auto_format_on_insert_leave = 0
 endif
-" ====================================
+" ===
 
-" ====================================
-" arm-assembly =======================
-" ====================================
+" ===
+" arm-assembly
+" ===
 function! SetupArm()
     execute('set filetype=arm')
     execute('IndentGuidesToggle')
@@ -284,49 +338,33 @@ function! SetupArm()
 endfunction
 
 au BufNewFile,BufRead *.s,*.S call SetupArm() " arm = armv6/7
-" ====================================
+" ===
 
-" ====================================
-" Indentguides config ================
-" ====================================
+" ===
+" Indentguides config
+" ===
 let g:indentguides_spacechar = '•'
 let g:indentguides_tabchar = '|'
 let g:indentguides_firstlevel = 1
+" ===
 
-" Default indentguides characters
-" let g:indentguides_spacechar = '┆'
-" let g:indentguides_tabchar = '|'
-" ====================================
-
-" ====================================
-" When to use 'normal' tabs ==========
-" ====================================
+" ===
+" When to use 'normal' tabs
+" ===
 autocmd FileType make setlocal noexpandtab
 autocmd FileType Makefile setlocal noexpandtab
-autocmd FileType .html setlocal noexpandtab
-autocmd FileType .css setlocal noexpandtab
-autocmd FileType .php setlocal noexpandtab
-" ====================================
+" ===
 
-" ====================================
-" indent_guides config ===============
-" ====================================
-" let g:indent_guides_enable_on_vim_startup = 1
-" let g:indent_guides_start_level = 2
-" let g:indent_guides_guide_size = 1
-" ====================================
-
-" ====================================
-" Colorscheme ========================
-" ====================================
+" ===
+" Colorscheme
+" ===
 colorscheme snow
-" ====================================
+" ===
 
-" ====================================
-" Function to delete a 'stuck' =======
-" swap file for the current buffer ===
-" ====================================
-" autocmd SwapExists * let v:swapchoice="o"
+" ===
+" Function to delete a 'stuck'
+" swap file for the current buffer
+" ===
 function! DeleteFileSwaps()
     write
     let l:output = ''
@@ -348,9 +386,12 @@ function! DeleteFileSwaps()
     echo "Reset swap file extension for file: ".expand('%')
 endfunction
 command! DeleteFileSwaps :call DeleteFileSwaps()
-" ====================================
+" ===
 
-if g:use_comfortable_motion==1
+" ===
+" Comfortable Motion setup
+" ===
+if g:use_comfortable_motion == 1
     let g:comfortable_motion_no_default_key_mappings = 1
     let g:comfortable_motion_impulse_multiplier = 1  " Feel free to increase/decrease this value.
     nnoremap <silent> <C-e> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 1)<CR>
@@ -358,9 +399,11 @@ if g:use_comfortable_motion==1
     nnoremap <silent> <C-u> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 2)<CR>
     nnoremap <silent> <C-d> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -2)<CR>
 endif
+" ===
 
-"set scrolloff=2
-
+" ===
+" Setup F11/S-F11 for fullscreen/maximize toggle
+" ===
 function! FullScreenToggle()
     if g:GuiWindowFullScreen==1
         call GuiWindowFullScreen(0)
@@ -379,70 +422,76 @@ endfunction
 
 nnoremap <silent> <F11> :call MaximizedToggle()<CR>
 nnoremap <silent> <S-F11> :call FullScreenToggle()<CR>
-nnoremap <silent> <F12> <C-w>=
-
+" ===
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-"let g:LatexBox_latexmk_async=1
-
-"let g:LatexBox_latexmk_options="-synctex=1 -shell-escape"
-
-"let g:LatexBox_quickfix=2
-
-"let g:LatexBox_viewer="SumatraPDF -reuse-instance"
-
-let g:polyglot_disabled = ['latex']
-
-let g:vimtex_compiler_latexmk = {
-            \ 'backend' : 'nvim',
-            \ 'background' : 1,
-            \ 'build_dir' : '',
-            \ 'callback' : 1,
-            \ 'continuous' : 0,
-            \ 'executable' : 'latexmk',
-            \ 'options' : [
-            \   '-verbose',
-            \   '-file-line-error',
-            \   '-synctex=1',
-            \   '-interaction=nonstopmode',
-            \   '-shell-escape',
-            \ ],
-            \}
-
-"augroup vimtex_config
-"au!
-"au User VimtexEventQuit call vimtex#compiler#clean(0)
-"augroup END
-let g:vimtex_quickfix_mode = 1
-let g:vimtex_quickfix_open_on_warning = 0
-if g:platform ==? "windows" || g:platform ==? "windows_portable"
-    let g:vimtex_view_enabled = 1
-    let g:vimtex_view_general_viewer = 'SumatraPDF'
-    let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
-    let g:vimtex_view_general_options_latexmk = '-reuse-instance'
-elseif g:platform ==? "termux"
-    let g:vimtex_view_enabled = 1
-    let g:vimtex_view_general_viewer = 'termux-open'
-else
-    let g:vimtex_view_enabled = 0
-    let g:vimtex_view_general_viewer = ''
+" ===
+" Disable polyglot for latex files
+" ===
+if g:use_polyglot == 1
+    let g:polyglot_disabled = ['latex']
 endif
+" ===
 
-if g:use_pandoc_markdown
-    let g:pandoc#syntax#conceal#use = 0
-    let g:pandoc#formatting#mode="sa"
-    let g:pandoc#formatting#smart_autoformat_on_cursormoved=1
+" ===
+" Setup vimtex
+" ===
+if g:use_vimtex == 1
+    let g:vimtex_compiler_latexmk = {
+                \ 'backend' : 'nvim',
+                \ 'background' : 1,
+                \ 'build_dir' : '',
+                \ 'callback' : 1,
+                \ 'continuous' : 0,
+                \ 'executable' : 'latexmk',
+                \ 'options' : [
+                \   '-verbose',
+                \   '-file-line-error',
+                \   '-synctex=1',
+                \   '-interaction=nonstopmode',
+                \   '-shell-escape',
+                \ ],
+                \}
+
+    let g:vimtex_quickfix_mode = 1
+    let g:vimtex_quickfix_open_on_warning = 0
+    if g:platform ==? "windows" || g:platform ==? "windows_portable"
+        let g:vimtex_view_enabled = 1
+        let g:vimtex_view_general_viewer = 'SumatraPDF'
+        let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
+        let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+    elseif g:platform ==? "termux"
+        let g:vimtex_view_enabled = 1
+        let g:vimtex_view_general_viewer = 'termux-open'
+    else
+        let g:vimtex_view_enabled = 0
+        let g:vimtex_view_general_viewer = ''
+    endif
+
+    let g:vimtex_fold_enabled=1
 endif
+" ===
 
+" ===
+" Setup javacomplete
+" ===
 if g:use_javacomplete==1
     autocmd FileType java setlocal omnifunc=javacomplete#Complete
 endif
+" ===
 
+" ===
+" Setup deoplete
+" ===
 if g:use_autocomplete==2
     let g:deoplete#enable_at_startup = 1
 endif
+" ===
 
+" ===
+" Setup YouCompleteMe
+" ===
 if g:use_autocomplete == 3
     nnoremap <leader>ygg :YcmCompleter GoToImprecise<CR>
     nnoremap <leader>yg :YcmCompleter GoTo<CR>
@@ -461,21 +510,33 @@ if g:use_autocomplete == 3
 
     nnoremap <leader>yr :YcmRestartServer<CR>
 endif
+" ===
 
-nnoremap <leader>s :FSHere<CR>
+" ===
+" Setup fswitch
+" ===
+if g:use_fswitch == 1
+    nnoremap <leader>s :FSHere<CR>
+endif
+" ===
 
+" ===
+" Setup python
+" ===
 if g:use_python == 1
     let g:table_mode_corner_corner='+'
     let g:table_mode_header_fillchar='='
 endif
+" ===
 
-if g:use_airline==1
-    " air-line
-
+" ===
+" Setup airline
+" ===
+if g:use_airline == 1
     let g:airline_powerline_fonts = 1
     if !exists('g:airline_symbols')
         let g:airline_symbols = {}
-        if g:use_font==0
+        if g:use_font == 0
             let g:airline_left_sep = ''
             let g:airline_right_sep = ''
             let g:airline_symbols.linenr = '␊'
@@ -514,195 +575,316 @@ if g:use_airline==1
     "let g:airline_theme = "badwolf"
     let g:airline_theme = "deus"
 endif
+" ===
 
+" ===
+" Setup sound
+" ===
 if g:use_sound==1
     call orchestra#prelude()
 
     call orchestra#set_tune('bubbletrouble')
 endif
+" ===
 
-let g:livedown_autorun = 0
+" ===
+" Setup livedown
+" ===
+if g:use_livedown == 1
+    let g:livedown_autorun = 0
+    let g:livedown_open = 1
+    let g:livedown_port = 1337
+    let g:livedown_browser = "firefox -P livedown"
+    let g:confirm_new_file = 1
+    let g:wiki_history = {}
 
-let g:livedown_open = 1
+    nmap <leader>m :LivedownToggle<CR>
+endif
+" ===
 
-let g:livedown_port = 1337
+" ===
+" Setup Nerdtree
+" ===
+if g:use_nerdtree == 1
+    map <leader>n :NERDTreeToggle<CR>
+endif
+" ===
 
-let g:livedown_browser = "firefox -P livedown"
-
-let g:confirm_new_file = 1
-
-let g:wiki_history = {}
-
-"nmap <S-Enter> Ox<BS><Esc>
-"nmap <CR> ox<BS><Esc>
-"inoremap <Esc> <Esc>`^
-
-map <leader>n :NERDTreeToggle<CR>
-
-"nmap <Tab> >>
-"nmap <Shift+Tab> <<
-
-"vmap <Tab> >>
-"vmap <Shift+Tab> <<
-
-" nnoremap o o
-" nnoremap O O
-
+" ===
+" Prevent accidental vim force quit
+" ===
 nnoremap Q <nop>
+" ===
 
-nmap <leader>m :LivedownToggle<CR>
+" ===
+" Setup pandoc
+" ===
+if g:use_pandoc == 1
+    let g:pandoc#syntax#conceal#use = 0
+    let g:pandoc#formatting#mode="sa"
+    let g:pandoc#formatting#smart_autoformat_on_cursormoved=1
 
-let g:data = []
-function! g:JobHandler(job_id, data, event)
-    if a:event == 'stdout' || a:event == 'stderr'
-        echom '>> ' . substitute(join(a:data), "\^M", "\r", "g")
-    else
-        echom 'Job ' . a:job_id . ' finished'
-
-        let index = 0
-        while index < len(g:jobs)
-            let item = g:jobs[index]
-            if item == a:job_id
-                call remove(g:jobs, index)
-            endif
-            let index = index + 1
-        endwhile
-
-        if string(a:data) != "0"
-            echoerr 'Program terminated with exit code ' . string(a:data)
-        endif
-    endif
-
-    "call append(line('$'), str)
-endfunction
-
-let g:callbacks = {
-            \ 'on_stdout': function('g:JobHandler'),
-            \ 'on_stderr': function('g:JobHandler'),
-            \ 'on_exit': function('g:JobHandler')
-            \ }
-
-let g:callbacks_no_out = {
-            \ 'on_exit': function('g:JobHandler')
-            \ }
-
-"function! Stdout(job_id, data, event)
-"echom 'Job ' . a:job_id . ': >>' . join(a:data)
-"" echom 'stdout: ' . a:data[0]
-"endfunction
-
-" function! Stderr(job_id, data, event)
-" 	echoerr 'Job ' . a:job_id . ': >>' . join(a:data)
-" endfunction
-
-"function! PrintFinished(job_id, data, event)
-"echom 'Job ' . a:job_id . ' finished with exit code: ' . string(a:data)
-"endfunction
-
-function! OpenPdf()
-    if g:use_async==1
-        let pdf_path = ""
-
-        if g:latex_use_outdir==1
-            let pdf_path = expand('%:r') . "_" . g:latex_outdir . "/" . expand('%:t:r') . ".pdf"
+    let g:data = []
+    function! g:JobHandler(job_id, data, event)
+        if a:event == 'stdout' || a:event == 'stderr'
+            echom '>> ' . substitute(join(a:data), "\^M", "\r", "g")
         else
-            let pdf_path = expand('%:r') . ".pdf"
-        endif
+            echom 'Job ' . a:job_id . ' finished'
 
-        let pdf_job = jobstart(g:pdf_viewer . " " . pdf_path)
-        echom "Started PDF-Viewer with job_id " . pdf_job
-        "execute("AsyncRun " . g:pdf_viewer . " " . expand('%:r') . ".pdf")
-        let g:open_pdf=0
-    else
-        execute("!" . g:pdf_viewer. " " . expand('%:r') . ".pdf")
-    endif
-endfunction
-
-function! ConvertPandoc(attr)
-    let command = ""
-    if a:attr == "md-to-pdf"
-        let command = "pandoc -s " . @% . " --from=markdown+escaped_line_breaks -o " . expand('%:r') . ".pdf"
-    elseif a:attr == "md-html-to-pdf"
-        let command = "pandoc --katex --highlight-style=zenburn -t html5 --css=file:///D:/Pandoc/katex_style.css " . @% . " -o " . expand('%:r') . ".pdf"
-    elseif a:attr == "md-to-html"
-        let command = "pandoc " . @% . " -s --katex --css=file:///D:/Pandoc/katex_style.css -o " . expand('%:r') . ".html"
-    elseif a:attr == "latex-to-pdf"
-        let command = "pandoc " . @% . " -s -o " . expand('%:r') . ".pdf"
-    endif
-
-    " if g:use_async==1
-    " execute("AsyncRun " . command)
-    " else
-    "let g:pandoc#command#autoexec_command="call jobstart('pandoc -s " . @% . " --from=markdown -o " . expand('%:r') . ".pdf')"
-    if g:use_async==1
-        " let g:current_job = jobstart('pandoc -s ' . expand('%') . ' --from=markdown -o ' . expand('%:r') . '.pdf', {'out_io': 'buffer', 'out_name': g:pandoc_output})
-        " let g:current_job = jobstart(command, {'out_io': 'buffer', 'out_name': g:pandoc_output})
-        " let g:current_job = jobstart(command, {'on_stdout': function('Stdout'), 'on_stderr': function('Stdout'), 'on_exit': function('PrintFinished')})
-        "
-        if len(g:jobs) > 0
             let index = 0
             while index < len(g:jobs)
                 let item = g:jobs[index]
-                call jobstop(item)
+                if item == a:job_id
+                    call remove(g:jobs, index)
+                endif
                 let index = index + 1
             endwhile
+
+            if string(a:data) != "0"
+                echoerr 'Program terminated with exit code ' . string(a:data)
+            endif
         endif
-        let current_job = jobstart(command, g:callbacks)
-        call insert(g:jobs, current_job)
-        echom 'Running ' . command . ' with Job-Nr. ' . current_job
-    else
+
+        "call append(line('$'), str)
+    endfunction
+
+    let g:callbacks = {
+                \ 'on_stdout': function('g:JobHandler'),
+                \ 'on_stderr': function('g:JobHandler'),
+                \ 'on_exit': function('g:JobHandler')
+                \ }
+
+    let g:callbacks_no_out = {
+                \ 'on_exit': function('g:JobHandler')
+                \ }
+
+    "function! Stdout(job_id, data, event)
+    "echom 'Job ' . a:job_id . ': >>' . join(a:data)
+    "" echom 'stdout: ' . a:data[0]
+    "endfunction
+
+    " function! Stderr(job_id, data, event)
+    " 	echoerr 'Job ' . a:job_id . ': >>' . join(a:data)
+    " endfunction
+
+    "function! PrintFinished(job_id, data, event)
+    "echom 'Job ' . a:job_id . ' finished with exit code: ' . string(a:data)
+    "endfunction
+
+    function! OpenPdf()
+        if g:use_async==1
+            let pdf_path = ""
+
+            if g:latex_use_outdir==1
+                let pdf_path = expand('%:r') . "_" . g:latex_outdir . "/" . expand('%:t:r') . ".pdf"
+            else
+                let pdf_path = expand('%:r') . ".pdf"
+            endif
+
+            let pdf_job = jobstart(g:pdf_viewer . " " . pdf_path)
+            echom "Started PDF-Viewer with job_id " . pdf_job
+            "execute("AsyncRun " . g:pdf_viewer . " " . expand('%:r') . ".pdf")
+            let g:open_pdf=0
+        else
+            execute("!" . g:pdf_viewer. " " . expand('%:r') . ".pdf")
+        endif
+    endfunction
+
+    function! ConvertPandoc(attr)
+        let command = ""
+        if a:attr == "md-to-pdf"
+            let command = "pandoc -s " . @% . " --from=markdown+escaped_line_breaks -o " . expand('%:r') . ".pdf"
+        elseif a:attr == "md-html-to-pdf"
+            let command = "pandoc --katex --highlight-style=zenburn -t html5 --css=file:///D:/Pandoc/katex_style.css " . @% . " -o " . expand('%:r') . ".pdf"
+        elseif a:attr == "md-to-html"
+            let command = "pandoc " . @% . " -s --katex --css=file:///D:/Pandoc/katex_style.css -o " . expand('%:r') . ".html"
+        elseif a:attr == "latex-to-pdf"
+            let command = "pandoc " . @% . " -s -o " . expand('%:r') . ".pdf"
+        endif
+
+        " if g:use_async==1
+        " execute("AsyncRun " . command)
+        " else
+        "let g:pandoc#command#autoexec_command="call jobstart('pandoc -s " . @% . " --from=markdown -o " . expand('%:r') . ".pdf')"
+        if g:use_async==1
+            " let g:current_job = jobstart('pandoc -s ' . expand('%') . ' --from=markdown -o ' . expand('%:r') . '.pdf', {'out_io': 'buffer', 'out_name': g:pandoc_output})
+            " let g:current_job = jobstart(command, {'out_io': 'buffer', 'out_name': g:pandoc_output})
+            " let g:current_job = jobstart(command, {'on_stdout': function('Stdout'), 'on_stderr': function('Stdout'), 'on_exit': function('PrintFinished')})
+            "
+            if len(g:jobs) > 0
+                let index = 0
+                while index < len(g:jobs)
+                    let item = g:jobs[index]
+                    call jobstop(item)
+                    let index = index + 1
+                endwhile
+            endif
+            let current_job = jobstart(command, g:callbacks)
+            call insert(g:jobs, current_job)
+            echom 'Running ' . command . ' with Job-Nr. ' . current_job
+        else
+            execute("!" . command)
+            echom "Compilation finished"
+        endif
+        " endif
+
+        if g:open_pdf==1
+            call OpenPdf() normal <CR>
+        endif
+    endfunction
+
+    function! g:ExitedWithCode(job_id, data, event)
+        echom "Job " . a:job_id . " exited with code: " . string(a:data)
+    endfunction
+
+    function! ConvertPandocPdfLatexDebug()
+        let command = "pandoc " . @% . " -s -o " . expand('%:r') . ".tex"
+
+        let output = ""
+        if g:latex_use_outdir==1
+            let output = "-output-directory=" . expand('%:r') . "_" . g:latex_outdir
+        else
+            let output = ""
+        endif
+
+        if g:latexmk_use==1
+            let pdf_command = "latexmk -pdf -halt-on-error -shell-escape " . output . " " . expand('%:r') . ".tex"
+        else
+            let pdf_command = "pdflatex -shell-escape " . output . " " . expand('%:r') . ".tex"
+        endif
+
         execute("!" . command)
-        echom "Compilation finished"
-    endif
-    " endif
+        execute("!" . pdf_command)
+    endfunction
 
-    if g:open_pdf==1
-        call OpenPdf() normal <CR>
-    endif
-endfunction
+    function! ConvertPandocPdfLatex()
+        let command = "pandoc " . @% . " -s -o " . expand('%:r') . ".tex"
 
-function! g:ExitedWithCode(job_id, data, event)
-    echom "Job " . a:job_id . " exited with code: " . string(a:data)
-endfunction
-
-function! ConvertPandocPdfLatexDebug()
-    let command = "pandoc " . @% . " -s -o " . expand('%:r') . ".tex"
-
-    let output = ""
-    if g:latex_use_outdir==1
-        let output = "-output-directory=" . expand('%:r') . "_" . g:latex_outdir
-    else
         let output = ""
-    endif
+        if g:latex_use_outdir==1
+            let output = "-output-directory=" . expand('%:r') . "_" . g:latex_outdir
+        else
+            let output = ""
+        endif
 
-    if g:latexmk_use==1
-        let pdf_command = "latexmk -pdf -halt-on-error -shell-escape " . output . " " . expand('%:r') . ".tex"
-    else
-        let pdf_command = "pdflatex -shell-escape " . output . " " . expand('%:r') . ".tex"
-    endif
+        if g:latexmk_use==1
+            let pdf_command = "latexmk -pdf -halt-on-error -shell-escape " . output . " " . expand('%:r') . ".tex"
+            let pdf_cleanup = "latexmk -c " . output . " " . expand('%:r') . ".tex"
+        else
+            let pdf_command = "pdflatex -shell-escape " . output . " " . expand('%:r') . ".tex"
+        endif
 
-    execute("!" . command)
-    execute("!" . pdf_command)
-endfunction
+        if g:use_async==1
+            if len(g:jobs) > 0
+                let index = 0
+                while index < len(g:jobs)
+                    let item = g:jobs[index]
+                    call jobstop(item)
+                    let index = index + 1
+                endwhile
+            endif
 
-function! ConvertPandocPdfLatex()
-    let command = "pandoc " . @% . " -s -o " . expand('%:r') . ".tex"
+            let current_job = jobstart(command, g:callbacks)
+            call insert(g:jobs, current_job)
+            echom 'Running ' . command . ' with Job-Nr. ' . current_job
 
-    let output = ""
-    if g:latex_use_outdir==1
-        let output = "-output-directory=" . expand('%:r') . "_" . g:latex_outdir
-    else
-        let output = ""
-    endif
+            call jobwait([current_job], 30000)
 
-    if g:latexmk_use==1
-        let pdf_command = "latexmk -pdf -halt-on-error -shell-escape " . output . " " . expand('%:r') . ".tex"
-        let pdf_cleanup = "latexmk -c " . output . " " . expand('%:r') . ".tex"
-    else
-        let pdf_command = "pdflatex -shell-escape " . output . " " . expand('%:r') . ".tex"
-    endif
+            echom "Conversion from " . @% . " to " . expand('%:r') . ".tex finished"
 
-    if g:use_async==1
+            let current_job = jobstart(pdf_command, g:callbacks_no_out)
+            call insert(g:jobs, current_job)
+            echom 'Running ' . pdf_command . ' with Job-Nr. ' . current_job
+
+            let result = jobwait([current_job], 120000)
+
+            if result[0]==-1
+                echom "Generation of " . expand('%:r') . ".pdf timed out"
+            elseif result[0]==-2
+                echom "Generation of " . expand('%:r') . ".pdf terminated"
+            elseif result[0]==-3
+                echom "INVALID JOB-ID: Generation of " . expand('%:r') . ".pdf terminated"
+            else
+                echom "Generation of " . expand('%:r') . ".pdf finished"
+
+                if g:latexmk_use==1
+                    if g:latexmk_clean==1
+                        let current_job = jobstart(pdf_cleanup, g:callbacks)
+                        call insert(g:jobs, current_job)
+                        echom 'Running' . pdf_cleanup . ' with Job-Nr. ' . current_job
+
+                        call jobwait([current_job], 30000)
+
+                        echom "Cleaned up for " . expand('%:r')
+                    endif
+                endif
+            endif
+        else
+            execute("!" . command)
+            echom "Conversion finished"
+            execute("!" . pdf_command)
+            echom "Compilation finished"
+
+            if g:latexmk_use==1
+                execute("!" . pdf_cleanup)
+                echom "Cleanup finished"
+            endif
+        endif
+    endfunction
+
+    nmap <leader>pm :call ConvertPandoc("md-to-pdf")<CR><CR>
+    nmap <leader>pM :call ConvertPandoc("md-html-to-pdf")<CR><CR>
+    nmap <leader>ph :call ConvertPandoc("md-to-html")<CR><CR>
+    nmap <leader>pl :call ConvertPandocPdfLatex()<CR><CR>
+    nmap <leader>pd :call ConvertPandocPdfLatexDebug()<CR>
+    nmap <leader>pp :AsyncStop<CR>:call OpenPdf()<CR>
+    nmap <leader>po :AsyncStop<CR>:AsyncRun<Space>sumatrapdf<Space>
+
+    function! ToggleCompileOnSave()
+        if g:compile_on_save == 1
+            let g:compile_on_save=0
+            echom "Compile on save is now turned OFF"
+        else
+            let g:compile_on_save=1
+            echom "Compile on save is now turned ON"
+        endif
+    endfunction
+
+    nmap <leader>pc :call ToggleCompileOnSave()<CR>
+
+    function! ConvertPandocOnSave(args)
+        if g:compile_on_save == 1
+            call ConvertPandoc(a:args)
+            execute "normal \<CR>"
+        endif
+    endfunction
+
+    "autocmd FileType pandoc autocmd BufWritePost <buffer> call ConvertPandoc(g:pandoc_default) | execute("normal \<CR>")
+    autocmd FileType pandoc silent autocmd BufWritePost <buffer> silent! call ConvertPandocOnSave(g:pandoc_default)
+    " autocmd FileType tex silent autocmd BufWritePost <buffer> silent! call ConvertPandoc("latex-to-pdf")
+endif
+" ===
+
+
+" ===
+" Setup latexmk
+" ===
+if g:use_latexmk == 1
+    function! ConvertPdfLatexDebug()
+        if g:latexmk_use==1
+            let pdf_command = "latexmk -pdf -halt-on-error -shell-escape " . output . " " . expand('%:r') . ".tex"
+        else
+            let pdf_command = "pdflatex -shell-escape " . output . " " . expand('%:r') . ".tex"
+        endif
+
+        execute("!" . command)
+        execute("!" . pdf_command)
+    endfunction
+
+    function! ConvertPdfLatex()
+        let pdf_command = "latexmk -pdf -halt-on-error -shell-escape " . expand('%:r') . ".tex"
+        let pdf_cleanup = "latexmk -c " . expand('%:r') . ".tex"
+
         if len(g:jobs) > 0
             let index = 0
             while index < len(g:jobs)
@@ -711,14 +893,6 @@ function! ConvertPandocPdfLatex()
                 let index = index + 1
             endwhile
         endif
-
-        let current_job = jobstart(command, g:callbacks)
-        call insert(g:jobs, current_job)
-        echom 'Running ' . command . ' with Job-Nr. ' . current_job
-
-        call jobwait([current_job], 30000)
-
-        echom "Conversion from " . @% . " to " . expand('%:r') . ".tex finished"
 
         let current_job = jobstart(pdf_command, g:callbacks_no_out)
         call insert(g:jobs, current_job)
@@ -726,519 +900,84 @@ function! ConvertPandocPdfLatex()
 
         let result = jobwait([current_job], 120000)
 
-        if result[0]==-1
-            echom "Generation of " . expand('%:r') . ".pdf timed out"
-        elseif result[0]==-2
-            echom "Generation of " . expand('%:r') . ".pdf terminated"
-        elseif result[0]==-3
-            echom "INVALID JOB-ID: Generation of " . expand('%:r') . ".pdf terminated"
+        if g:latexmk_clean==1
+            let current_job = jobstart(pdf_cleanup, g:callbacks)
+            call insert(g:jobs, current_job)
+            echom 'Running' . pdf_cleanup . ' with Job-Nr. ' . current_job
+
+            call jobwait([current_job], 30000)
+
+            echom "Cleaned up for " . expand('%:r')
+        endif
+    endfunction
+
+    function! CleanLatexDir(full)
+        if a:full==0
+            let clean="c"
         else
-            echom "Generation of " . expand('%:r') . ".pdf finished"
-
-            if g:latexmk_use==1
-                if g:latexmk_clean==1
-                    let current_job = jobstart(pdf_cleanup, g:callbacks)
-                    call insert(g:jobs, current_job)
-                    echom 'Running' . pdf_cleanup . ' with Job-Nr. ' . current_job
-
-                    call jobwait([current_job], 30000)
-
-                    echom "Cleaned up for " . expand('%:r')
-                endif
-            endif
+            let clean="C"
         endif
-    else
-        execute("!" . command)
-        echom "Conversion finished"
-        execute("!" . pdf_command)
-        echom "Compilation finished"
 
-        if g:latexmk_use==1
-            execute("!" . pdf_cleanup)
-            echom "Cleanup finished"
-        endif
-    endif
-endfunction
+        let curr_dir = getcwd()
+        execute("cd " . expand('%:p:h'))
 
-"nmap <leader>pm :execute "! pandoc " . @% . " --from=markdown -o " . expand('%:r') . ".pdf"<CR>
-"nmap <leader>pM :execute "! pandoc --katex --highlight-style=zenburn -t html5 --css=file:///D:/Pandoc/katex_style.css " . @% . " -o " . expand('%:r') . ".pdf"<CR>
-"nmap <leader>ph :execute "! pandoc " . @% . " -s --katex --css=file:///D:/Pandoc/katex_style.css -o " . expand('%:r') . ".html"<CR>
-"nmap <leader>pl :execute "! pandoc " . @% . " -s -o " . expand('%:r') . ".pdf"<CR>
-au BufNewFile,BufRead,BufEnter   *.wiki    setlocal spell    spelllang=de_de
-au BufNewFile,BufRead,BufEnter   *.md      setlocal spell    spelllang=de_de
-au BufNewFile,BufRead,BufEnter   *.txt     setlocal spell    spelllang=de_de
-au BufNewFile,BufRead,BufEnter   README    setlocal spell    spelllang=en_us
+        "let pdf_cleanup = "latexmk -" . clean . " " . expand('%:r') . ".tex"
 
-nmap <leader>pm :call ConvertPandoc("md-to-pdf")<CR><CR>
-nmap <leader>pM :call ConvertPandoc("md-html-to-pdf")<CR><CR>
-nmap <leader>ph :call ConvertPandoc("md-to-html")<CR><CR>
-nmap <leader>pl :call ConvertPandocPdfLatex()<CR><CR>
-nmap <leader>pd :call ConvertPandocPdfLatexDebug()<CR>
-nmap <leader>pp :AsyncStop<CR>:call OpenPdf()<CR>
-nmap <leader>po :AsyncStop<CR>:AsyncRun<Space>sumatrapdf<Space>
+        let pdf_cleanup = "latexmk -" . clean
 
+        execute("!" . pdf_cleanup)
+        execute("cd " . curr_dir)
+    endfunction
 
-function! ConvertPdfLatexDebug()
-    if g:latexmk_use==1
-        let pdf_command = "latexmk -pdf -halt-on-error -shell-escape " . output . " " . expand('%:r') . ".tex"
-    else
-        let pdf_command = "pdflatex -shell-escape " . output . " " . expand('%:r') . ".tex"
-    endif
-
-    execute("!" . command)
-    execute("!" . pdf_command)
-endfunction
-
-function! ConvertPdfLatex()
-    let pdf_command = "latexmk -pdf -halt-on-error -shell-escape " . expand('%:r') . ".tex"
-    let pdf_cleanup = "latexmk -c " . expand('%:r') . ".tex"
-
-    if len(g:jobs) > 0
-        let index = 0
-        while index < len(g:jobs)
-            let item = g:jobs[index]
-            call jobstop(item)
-            let index = index + 1
-        endwhile
-    endif
-
-    let current_job = jobstart(pdf_command, g:callbacks_no_out)
-    call insert(g:jobs, current_job)
-    echom 'Running ' . pdf_command . ' with Job-Nr. ' . current_job
-
-    let result = jobwait([current_job], 120000)
-
-    if g:latexmk_clean==1
-        let current_job = jobstart(pdf_cleanup, g:callbacks)
-        call insert(g:jobs, current_job)
-        echom 'Running' . pdf_cleanup . ' with Job-Nr. ' . current_job
-
-        call jobwait([current_job], 30000)
-
-        echom "Cleaned up for " . expand('%:r')
-    endif
-endfunction
-
-function! CleanLatexDir(full)
-    if a:full==0
-        let clean="c"
-    else
-        let clean="C"
-    endif
-
-    let curr_dir = getcwd()
-    execute("cd " . expand('%:p:h'))
-
-    "let pdf_cleanup = "latexmk -" . clean . " " . expand('%:r') . ".tex"
-
-    let pdf_cleanup = "latexmk -" . clean
-
-    execute("!" . pdf_cleanup)
-    execute("cd " . curr_dir)
-endfunction
-
-"nnoremap <leader>ll :call ConvertPdfLatex()<CR><CR>
-"nnoremap <leader>lL :call ConvertPdfLatexDebug()<CR><CR>
-nnoremap <leader>lc :call CleanLatexDir(0)<CR><CR>
-nnoremap <leader>lC :call CleanLatexDir(1)<CR><CR>
-"nnoremap <localleader>ll :call ConvertPdfLatex()<CR><CR>
-"nnoremap <localleader>lL :call ConvertPdfLatexDebug()<CR><CR>
-"nnoremap <localleader>lc :! latexmk -c<CR><CR>
-"nnoremap <localleader>lC :! latexmk -C<CR><CR>
-
-function! NewLatexTemplate()
-    let filename = input('Please specify the filename: ')
-    if filename!=""
-        let command = "Templator " . expand('%:p:h') . "/latex " . filename
-        echom command
-        execute(command)
-    endif
-endfunction
-
-nnoremap <leader>ln :call NewLatexTemplate()<CR>
-nnoremap <leader>pn :call NewLatexTemplate()<CR>
-
-function! ToggleCompileOnSave()
-    if g:compile_on_save == 1
-        let g:compile_on_save=0
-        echom "Compile on save is now turned OFF"
-    else
-        let g:compile_on_save=1
-        echom "Compile on save is now turned ON"
-    endif
-endfunction
-
-nmap <leader>pc :call ToggleCompileOnSave()<CR>
-
-function! ConvertPandocOnSave(args)
-    if g:compile_on_save == 1
-        call ConvertPandoc(a:args)
-        execute "normal \<CR>"
-    endif
-endfunction
-
-"autocmd FileType pandoc autocmd BufWritePost <buffer> call ConvertPandoc(g:pandoc_default) | execute("normal \<CR>")
-autocmd FileType pandoc silent autocmd BufWritePost <buffer> silent! call ConvertPandocOnSave(g:pandoc_default)
-" autocmd FileType tex silent autocmd BufWritePost <buffer> silent! call ConvertPandoc("latex-to-pdf")
-
-function! AsciidoctorConvert()
-    execute("!asciidoctor " . expand('%'))
-endfunction
-function! AsciidoctorPdfConvert()
-    execute("!asciidoctor-pdf " . expand('%'))
-endfunction
-function! AsciidoctorEpubConvert()
-    execute("!asciidoctor-epub3 " . expand('%'))
-endfunction
-
-nmap <leader>aa :call AsciidoctorConvert()<CR>
-nmap <leader>ap :call AsciidoctorPdfConvert()<CR>
-nmap <leader>ae :call AsciidoctorEpubConvert()<CR>
-
-function! TermuxOpenFile()
-    execute("!termux-open " . expand('%'))
-endfunction
-
-let g:web_browser = "firefox"
-let g:pdf_viewer = "sumatrapdf"
-let g:ebook_viewer = "ebook-viewer"
-
-if g:platform ==? "termux"
-    let g:web_browser = "termux-open"
-    let g:pdf_viewer = "termux-open"
-    let g:ebook_viewer = "termux-open"
+    "nnoremap <leader>ll :call ConvertPdfLatex()<CR><CR>
+    "nnoremap <leader>lL :call ConvertPdfLatexDebug()<CR><CR>
+    nnoremap <leader>lc :call CleanLatexDir(0)<CR><CR>
+    nnoremap <leader>lC :call CleanLatexDir(1)<CR><CR>
+    "nnoremap <localleader>ll :call ConvertPdfLatex()<CR><CR>
+    "nnoremap <localleader>lL :call ConvertPdfLatexDebug()<CR><CR>
+    "nnoremap <localleader>lc :! latexmk -c<CR><CR>
+    "nnoremap <localleader>lC :! latexmk -C<CR><CR>
 endif
+" ===
 
-function! OpenHTML()
-    execute("!" . web_browser . " ". expand('%:r') . ".html")
-endfunction
+" ===
+" Setup Asciidoctor
+" ===
+if g:use_asciidoctor == 1
+    function! AsciidoctorConvert()
+        execute("!asciidoctor " . expand('%'))
+    endfunction
+    function! AsciidoctorPdfConvert()
+        execute("!asciidoctor-pdf " . expand('%'))
+    endfunction
+    function! AsciidoctorEpubConvert()
+        execute("!asciidoctor-epub3 " . expand('%'))
+    endfunction
 
-function! OpenPdf()
-    execute("!" . pdf_viewer . " " . expand('%:r') . ".pdf")
-endfunction
+    nmap <leader>aa :call AsciidoctorConvert()<CR>
+    nmap <leader>ap :call AsciidoctorPdfConvert()<CR>
+    nmap <leader>ae :call AsciidoctorEpubConvert()<CR>
 
-function! OpenEpub()
-    execute("!" . ebook_viewer . " " . expand('%:r') . ".epub")
-endfunction
+    nmap <leader>ant i[.lightbox, cols="^2,^2", {LIGHTBOX}]<CR>\|===<CR>\|===<CR><ESC>kk
+    nmap <leader>ani aimage:./images/picture.jpg[picture, {POPUP}]<ESC>
+endif
+" ===
 
-nmap <leader>oo :call TermuxOpenFile()<CR><CR>
-nmap <leader>oh :call OpenHTML()<CR><CR>
-nmap <leader>op :call OpenPdf()<CR><CR>
-nmap <leader>oe :call OpenEpub()<CR><CR>
-
-nmap <leader>ant i[.lightbox, cols="^2,^2", {LIGHTBOX}]<CR>\|===<CR>\|===<CR><ESC>kk
-nmap <leader>ani aimage:./images/picture.jpg[picture, {POPUP}]<ESC>
-
-function! ConvertMarkdownToAsciidoc()
-    execute ("%s/\\!\\[\\(.\\{-}\\)\\](\\(.\\{-}\\))/image:\\2[\\1]/gc")
-    execute ("%s/\\[\\(.\\{-}\\)\\](\\(.\\{-}\\))/link:\\2[\\1]/gc")
-    execute("%s/\\#/=/gc")
-    execute("%s/image:\\(.\\{-}\\) ".\\{-}"\\[/image:\\1[/gc")
-endfunction
-
-
-" vimwiki stuff "
-" Run multiple wikis "
-
-let g:vimwiki_list = [
-            \{'path': "D:/Projects/BrainWiki",
-            \ 'syntax': 'markdown', 'ext': '.wiki'}
-            \]
-
-"au BufRead,BufNewFile *.wiki set filetype=vimwiki
-"function! ToggleCalendar()
-"execute ":Calendar"
-"if exists("g:calendar_open")
-"if g:calendar_open == 1
-"execute "q"
-"unlet g:calendar_open
-"else
-"g:calendar_open = 1
-"end
-"else
-"let g:calendar_open = 1
-"end
-"endfunction
-":autocmd FileType vimwiki map c :call ToggleCalendar()
-
-function! GetSelection() range
-    echo a:firstline
-    echo a:lastline
-    let selectedText = getline(a:firstline,a:lastline)
-    echo selectedText
-    call FilterSelection(join(selectedText))
-endfunction
-
-function! FilterSelection(text)
-    if a:text =~ ">>>"
-        call FileHandler(a:text)
-    else
-        let text_no_spaces = substitute(a:text, "[ \n]", "", "g")
-        call FileHandler(text_no_spaces)
-    endif
-endfunction
-
-function! BuffersList()
-    let all = range(0, bufnr('$'))
-    let res = []
-    for b in all
-        if bufexists(b)
-            call add(res, bufname(b))
-        endif
-    endfor
-    return res
-endfunction
-
-function! IsInBuffersList(text)
-    for b in BuffersList()
-        if b =~ a:text
-            return 1
-        endif
-    endfor
-    return 0
-endfunction
-
-function! FileHandler(text)
-    if a:text =~ "(" && a:text =~ ")"
-        let filename = matchstr(a:text, '(.\{-})')
-        let substituted = matchstr(filename, '[^\(].*[^\)]')
-        if substituted =~ ":" || substituted =~ "*" || substituted =~ "?" || substituted =~ "\"" || substituted =~ "<" || substituted =~ ">" || substituted =~ "|"
-            echoerr "Your filename contains invalid characters!"
-        else
-            try
-                let confirmed = 1
-                let buffer_exists = 0
-                if IsInBuffersList(substituted) == 1
-                    let buffer_exists = 1
-                endif
-                if empty(glob(substituted)) && buffer_exists == 0
-                    echom "File does not exist"
-                    let g:confirm_new_file = 1
-                else
-                    let g:confirm_new_file = 0
-                endif
-
-                echom g:confirm_new_file
-
-                if g:confirm_new_file == 1
-                    let val = input('Do you want to create a new file "'. substituted . '" [y]es/[N]o? ')
-                    if val !~? '^y'
-                        let confirmed = 0
-                    else
-                        let confirmed = 1
-                    endif
-                endif
-
-                echom "File exists or is open"
-                if confirmed == 1
-                    let g:wiki_history[substituted] = expand('%:p')
-                    execute('e %:h/' . substituted)
-                else
-                    echom "You aborted the file creation! please also remove the link from the document!"
-                endif
-            catch /./
-                echoerr 'An error occured during file creation: ' . v:exception
-            endtry
-        endif
-    else
-        if a:text =$ "\\$"
-            let substituted = substitute(a:text, ".*\\$", "", "g")
-            echom substituted
-            "let substituted = matchstr(substituted, '[^>>>].*')
-            let text_no_spaces = substitute(substituted, "[\n]", "", "g")
-            let text_no_spaces = substitute(text_no_spaces, "[ ]", "_", "g")
-            if text_no_spaces !~ ".md"
-                let text_no_spaces .= ".md"
-            endif
-            if text_no_spaces =~ ":" || substituted =~ "*" || substituted =~ "?" || substituted =~ "\"" || substituted =~ "<" || substituted =~ ">" || substituted =~ "|"
-                echoerr "Your filename contains invalid characters!"
-            else
-                "call setline(".", "[" . substituted . "](" . substituted . ")")
-                "execute("normal! ddO[" . substituted . "](" . text_no_spaces . ")")
-                execute("normal! 0f$c$[" . substituted . "](" . text_no_spaces . ")")
-                "call FileHandler("(" . text_no_spaces . ")")
-            endif
-        endif
-    endif
-endfunction
-
-function! GetLine()
-    let currentLine = getline(".")
-    call FilterSelection(currentLine)
-endfunction
-
-function! GoBackNew()
-    echom expand('%:t')
-    if has_key(g:wiki_history, expand('%:t'))
-        let parent = remove(g:wiki_history, expand('%:t'))
-        echom parent
-        execute("e " . parent)
-    else
-        echom "Nothing to go back to!"
-    endif
-endfunction
-
-function! GoBack()
-    execute('e#')
-endfunction
-
-command! -range GetSelectionInRange <line1>,<line2>call GetSelection()
-
-nmap <leader><Enter> :silent :call GetLine()<CR>
-vmap <leader><Enter> :GetSelectionInRange<CR>
-
-map <leader><BS> :silent :call GoBackNew()<CR>
-
-function! StartHttp()
-    if g:http_server != ''
-        echom "A server seems to be running already with process id " . g:http_server
-        echom "Stopping it first"
-        call jobstop(g:http_server)
-        echom "Http server with process id " . g:http_server . " stopped"
-        let g:http_server=''
-    endif
-    execute("lcd %:p:h")
-    let g:http_server = jobstart("python -m http.server 1224")
-    echom "Http server started in directory of the current file with process id " . g:http_server
-endfunction
-
-function! StopHttp()
-    if g:http_server == ''
-        echoerr "There seems to be no server running"
-    else
-        call jobstop(g:http_server)
-        echom "Http server with process id " . g:http_server . " stopped"
-        let g:http_server=''
-    endif
-endfunction
-
-function! ToggleHttp()
-    if g:http_server == ''
-        execute("lcd %:p:h")
-        let g:http_server = jobstart("python -m http.server 1224")
-        echom "Http server started in directory of the current file with process id " . g:http_server
-    else
-        call jobstop(g:http_server)
-        echom "Http server with process id " . g:http_server . " stopped"
-        let g:http_server=''
-    endif
-endfunction
-
-command! StartHttp call StartHttp()
-command! StopHttp call StopHttp()
-command! ToggleHttp call ToggleHttp()
-
-"map <leader>s :ToggleHttp<CR>
-
-function! CodeBlock()
-    let val = input('Choose your coding language - leave blank for no syntax-highlighting: ')
-    execute("normal! S```" . val . "<ESC>o```<ESC>Ox<BS>")
-endfunction
-
-function! MakeTable()
-    let count = input('How many columns would you like to have? ')
-    if count == ""
-        return
-    endif
-    let col_nr = str2nr(count)
-    let col_headers = []
-    while col_nr > 0
-        let val = input('Enter the column heading: ')
-        while len(val) < 3
-            let val .= " "
-        endwhile
-        call add(col_headers, val)
-        let col_nr -= 1
-    endwhile
-    let headings = "| "
-    let divider = "| "
-    let i = 0
-    for heading in col_headers
-        let headings .= col_headers[i] . " | "
-        let j = 0
-        let div_tmp = ""
-        while j < len(col_headers[i])
-            let div_tmp .= "-"
-            let j += 1
-        endwhile
-        let div_tmp .= " | "
-        let divider .= div_tmp
-        let i += 1
-    endfor
-    execute("normal! S" . headings)
-    execute("normal! o" . divider)
-endfunction
-
-inoremap <F9> <ESC>:silent :call CodeBlock()<CR>
-nmap <F9> :silent :call CodeBlock()<CR>
-
-" inoremap <F10> <ESC>:silent :call MakeTable()<CR>
-" nmap <F10> :silent :call MakeTable()<CR>
-inoremap <F10> <ESC>:TableModeToggle<CR>
-nmap <F10> <ESC>:TableModeToggle<CR>
-
-function! Heading()
-    execute("normal! O[<i class=\"fas fa-backward\" title=\"<--\"></i> Back to the landing page](index.md)")
-    execute("normal! o# BrainOdin")
-    execute("normal! o")
-    execute("normal! j")
-endfunction
-
-"inoremap <leader><F11> <ESC>:silent :call Heading()<CR>
-nmap <leader><F11> :silent :call Heading()<CR>
-map <F4> :set relativenumber!<CR>
-nmap <C-7> <leader>c<space>
-vmap <C-7> <leader>c<space>
-
-set number
-set relativenumber
-
+" ===
+" Don't schow relative numbers in insert mode, but show them in normal mode
+" ===
 autocmd BufWinEnter,BufEnter,FocusGained,InsertLeave * set relativenumber
 autocmd BufWinLeave,BufLeave,FocusLost,InsertEnter  * set norelativenumber
+" ===
 
 "hi LineNr guifg=#B0BEC5
 "hi CursorLineNr guifg=#64FFDA
 
-set ignorecase
-set smartcase
-set backspace=indent,eol,start
-set confirm
-
-function! WriteFolds()
-    let filename=expand('%:r') . ".fold"
-    execute("mkview! " . filename)
-endfunction
-
-function! SaveFolds()
-    let filename=expand('%:r') . ".fold"
-    if filereadable(filename)
-        execute("mkview! " . filename)
-    endif
-endfunction
-
-function! ReadFolds()
-    let filename=expand('%:r') . ".fold"
-    if filereadable(filename)
-        execute("source " . filename)
-    endif
-endfunction
-
-let g:vimtex_fold_enabled=1
-"
-"
-" ====================================
-" General maps                ========
-" (at the bottom to overwrite ========
-" everything)                 ========
-" ====================================
-command! W write
-
-set incsearch
-
-set clipboard=unnamedplus
-
+" ===
+" General maps (at the bottom to overwrite everything)
+" ===
 nnoremap <silent> <leader>cd :cd %:p:h<CR>
-nnoremap <silent> <leader>CD :lcd %:p:h<CR>
+nnoremap <silent> <leader>lcd :lcd %:p:h<CR>
 
 tnoremap <Esc> <C-\><C-n>
 
@@ -1251,122 +990,85 @@ nnoremap <leader><BAR> <C-W><BAR>
 nnoremap <leader>= <C-W>=
 nnoremap <leader>T <C-W>T
 
-nnoremap <leader>e :e<Space>
-nnoremap <leader>t :tabe<Space>
-
-set splitbelow
-set splitright
-
-nmap gB :buffers<CR>
-nmap gb :buffer<Space>
-
-nnoremap § `
-
-filetype plugin on
-syntax on
-
-
 nmap <leader>h :noh<CR>
 
 nmap <leader>. :bnext<CR>
 nmap <leader>, :bprev<CR>
+" ===
 
-inoremap <F3>p unique_ptr<><ESC>i
-nnoremap <F3>p iunique_ptr<><ESC>i
-
-inoremap <F3>m make_unique<><ESC>i
-noremap <F3>m imake_unique<><ESC>i
-
-function! CPP_Include_Guard()
-    let guard_name = input("Please input the guard name:\n")
-    if guard_name != ""
-        execute("normal! mZ")
-        execute("normal! gg")
-        if getline(".") =~ "\."
-            execute("normal! O")
+" ===
+" Setup C++ specific stuff
+" ===
+if g:use_cpp == 1
+    function! CPP_Include_Guard()
+        let guard_name = input("Please input the guard name:\n")
+        if guard_name != ""
+            execute("normal! mZ")
+            execute("normal! gg")
+            if getline(".") =~ "\."
+                execute("normal! O")
+            endif
+            execute("normal! O#ifndef " . guard_name)
+            execute("normal! o#define " . guard_name)
+            execute("normal! G")
+            if getline(".") =~ "\."
+                execute("normal! o")
+            endif
+            execute("normal! o#endif // " . guard_name)
+            execute("normal! `Z")
         endif
-        execute("normal! O#ifndef " . guard_name)
-        execute("normal! o#define " . guard_name)
-        execute("normal! G")
-        if getline(".") =~ "\."
+    endfunction
+
+    function! CPP_Comment_File()
+        let file_desc = input("Please input a short file description:\n")
+        if file_desc != ""
+            let class_name = input("Please input a class name or leave empty:\n")
+            execute("normal! mZ")
+            execute("normal! O/**")
             execute("normal! o")
-        endif
-        execute("normal! o#endif // " . guard_name)
-        execute("normal! `Z")
-    endif
-endfunction
-
-function! CPP_Comment_File()
-    let file_desc = input("Please input a short file description:\n")
-    if file_desc != ""
-        let class_name = input("Please input a class name or leave empty:\n")
-        execute("normal! mZ")
-        execute("normal! O/**")
-        execute("normal! o")
-        execute("normal! S	@file " . expand("%:t"))
-        execute("normal! o@author DustVoice")
-        execute("normal! o")
-        if class_name != ""
-            execute("normal! o@class " . class_name)
+            execute("normal! S	@file " . expand("%:t"))
+            execute("normal! o@author DustVoice")
             execute("normal! o")
+            if class_name != ""
+                execute("normal! o@class " . class_name)
+                execute("normal! o")
+            endif
+            execute("normal! o" . file_desc)
+            execute("normal! o*/")
+            execute("normal! <<")
+            execute("normal! `Z")
         endif
-        execute("normal! o" . file_desc)
-        execute("normal! o*/")
-        execute("normal! <<")
-        execute("normal! `Z")
-    endif
-endfunction
+    endfunction
 
-function! CPP_Comment_Method()
-    let func_desc = input("Please input a short function description:\n")
-    if func_desc != ""
-        execute("normal! O/**")
-        execute("normal! o")
-        execute("normal! S	" . func_desc)
-        execute("normal! o*/")
-        execute("normal! <<")
-        execute("normal! k$")
-    endif
-endfunction
+    function! CPP_Comment_Method()
+        let func_desc = input("Please input a short function description:\n")
+        if func_desc != ""
+            execute("normal! O/**")
+            execute("normal! o")
+            execute("normal! S	" . func_desc)
+            execute("normal! o*/")
+            execute("normal! <<")
+            execute("normal! k$")
+        endif
+    endfunction
 
-command! CppIncludeGuard :call CPP_Include_Guard()
-command! CppCommentFile :call CPP_Comment_File()
-command! CppCommentMethod :call CPP_Comment_Method()
+    command! CppIncludeGuard :call CPP_Include_Guard()
+    command! CppCommentFile :call CPP_Comment_File()
+    command! CppCommentMethod :call CPP_Comment_Method()
 
-let b:current_syntax = "custom"
+    let b:current_syntax = "custom"
 
-syntax keyword cppCustomNamespace juce
-syntax keyword cppCustomNamespace PDFHummus
+    syntax keyword cppCustomNamespace juce
+    syntax keyword cppCustomNamespace PDFHummus
 
-hi def link cppCustomNamespace Constant
+    hi def link cppCustomNamespace Constant
+endif
+" ===
 
-" ====================================
-
+" ===
+" Background (needs to be the last command!)
+" ===
 nmap <leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
-" ====================================
-" Important that this  ===============
-" is the last command! ===============
-" ====================================
 set background=dark
-" ====================================
-
-
-" ====================================
-" Deactivated shit ===================
-" ====================================
-"if g:manual_fold_autoload==1
-"set foldmethod=manual
-"autocmd BufWinLeave,WinLeave,BufWritePost * call SaveFolds()
-"autocmd BufWinEnter * call ReadFolds()
-"autocmd InsertLeave,WinEnter * setlocal foldmethod=manual
-"autocmd InsertEnter,WinLeave * setlocal foldmethod=manual
-"else
-"set foldmethod=indent
-"set foldlevel=1
-""set foldclose=all
-"endif
-
-" nmap <leader>fw :call WriteFolds()<CR>
-" nmap <leader>fl :source expand('%:r') . ".fold"<CR>
-
+" ===
