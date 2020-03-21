@@ -6,8 +6,6 @@ set nocompatible
 runtime platform.vim
 
 if g:platform ==? "linux"
-    set termguicolors
-
     "autocmd VimLeave * set guicursor=a:ver35-blinkon0
     "set guicursor=
     let &t_SI = "\<esc>[5 q"  " blinking I-beam in insert mode
