@@ -235,7 +235,7 @@ if g:use_asm_indent == 1
 endif
 
 if g:use_indentguides == 1
-    Plug 'DustVoice/vim-indentguides'
+    Plug 'thaerkh/vim-indentguides'
 endif
 
 if g:use_sxhkd == 1
