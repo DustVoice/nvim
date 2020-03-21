@@ -8,9 +8,17 @@ runtime platform.vim
 if g:platform ==? "linux"
     "autocmd VimLeave * set guicursor=a:ver35-blinkon0
     "set guicursor=
-    let &t_SI = "\<esc>[5 q"  " blinking I-beam in insert mode
-    let &t_SR = "\<esc>[3 q"  " blinking underline in replace mode
-    let &t_EI = "\<esc>[ q"  " default cursor (usually blinking block) otherwise
+    if $TERM ==? "alacritty"
+        set termguicolors
+    else
+        set notermguicolors
+
+        if $TERM ==? "linux"
+            let &t_SI = "\<esc>[5 q"  " blinking I-beam in insert mode
+            let &t_SR = "\<esc>[3 q"  " blinking underline in replace mode
+            let &t_EI = "\<esc>[ q"  " default cursor (usually blinking block) otherwise
+        endif
+    endif
 elseif g:platform ==? "xterm"
     set notermguicolors
     set guicursor=
