@@ -304,7 +304,7 @@ endif
 " ===
 " Colorscheme
 " ===
-Plug 'DustVoice/snow'
+Plug 'ajmwagar/vim-deus'
 " ===
 
 " ===
@@ -358,7 +358,7 @@ autocmd FileType Makefile setlocal noexpandtab
 " ===
 " Colorscheme
 " ===
-colorscheme snow
+colorscheme deus
 " ===
 
 " ===
@@ -1066,9 +1066,7 @@ endif
 " ===
 
 " ===
-" Background (needs to be the last command!)
+" Background
 " ===
 nmap <leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
-
-set background=dark
 " ===
