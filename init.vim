@@ -6,7 +6,7 @@ set nocompatible
 runtime platform.vim
 
 if g:platform ==? "linux"
-    set notermguicolors
+    set termguicolors
 
     "autocmd VimLeave * set guicursor=a:ver35-blinkon0
     "set guicursor=
@@ -25,8 +25,8 @@ endif
 " ===
 " Choose the mapleaders, in my case the spacebar.
 " ===
-let mapleader=" "
-let maplocalleader=" "
+let mapleader = " "
+let maplocalleader = " "
 " ===
 
 " ===
@@ -38,98 +38,81 @@ set mouse=a
 " ===
 " Set basic options
 " ===
-set wrap linebreak nolist
+filetype plugin on
+
+set autoindent
+set backspace=indent,eol,start
 set breakindent
 set breakindentopt=shift:4
-
+set clipboard=unnamedplus
+set confirm
+set diffopt=filler,vertical
+set expandtab
+set ignorecase
+set incsearch
 set list
 set listchars=trail:·,tab:•\ ,extends:⟩,precedes:⟨
-set shortmess=a
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-set smartindent
-set autoindent
-set diffopt=filler,vertical
-
 set number
 set relativenumber
-
-set ignorecase
+set scrolloff=1
+set shiftwidth=4
+set shortmess=a
 set smartcase
-set backspace=indent,eol,start
-set confirm
-
+set smartindent
+set softtabstop=4
 set splitbelow
 set splitright
+set wrap linebreak nolist
 
-set incsearch
-
-set clipboard=unnamedplus
-
-filetype plugin on
-syntax on
+syntax enable
 " ===
+
 
 " ===
 " Set config variables, in order to change options by only modifying these variable values.
 " Sometimes this can also change the plugins used/needed.
 " ===
-let g:use_utf8 = 1
+let g:http_server = ''
 
-let g:use_autocomplete=1
-let g:ycm_clang = ''
-let g:ycm_java = ''
+let g:jobs = []
 
-let g:use_javacomplete = 0
-
-let g:use_comfortable_motion = 0
-
-let g:use_python = 1
-let g:use_async = 1
-let g:use_airline = 1
-let g:use_sound = 0
+let g:manual_fold_autoload = 1
 
 let g:tex_indent_items = 0
 let g:tex_items = ''
 
-let g:manual_fold_autoload = 1
-
-let g:jobs = []
-
-let g:http_server = ''
-
-let g:use_clang_format = 0
-
-let g:ycm_filetype_whitelist = {'cpp': 1}
-let g:ycm_confirm_extra_conf = 0
-
-let g:use_pandoc = 0
-let g:use_polyglot = 1
-let g:use_vimtex = 0
+let g:use_airline = 1
+let g:use_alt_colorschemes = 1
 let g:use_arm_syntax = 0
-
-let g:use_nerdcommenter = 1
-
-let g:use_buftabline = 1
-let g:use_nerdtree = 1
-let g:use_bufkill = 1
-
+let g:use_asciidoctor = 1
 let g:use_asm_indent = 1
-let g:use_indentguides = 1
-let g:use_sxhkd = 1
+let g:use_async = 1
+let g:use_autocomplete=1
+let g:use_bufkill = 1
+let g:use_buftabline = 1
+let g:use_clang_format = 0
+let g:use_comfortable_motion = 0
+let g:use_cpp = 1
 let g:use_fswitch = 1
 let g:use_fugitive = 1
-
-let g:use_livedown = 0
-
-let g:use_templator = 0
-
+let g:use_indentguides = 1
+let g:use_javacomplete = 0
 let g:use_latexmk = 0
-
-let g:use_asciidoctor = 1
-
-let g:use_cpp = 1
+let g:use_livedown = 0
+let g:use_nerdcommenter = 1
+let g:use_nerdtree = 1
+let g:use_pandoc = 0
+let g:use_polyglot = 1
+let g:use_python = 1
+let g:use_sound = 0
+let g:use_sxhkd = 1
+let g:use_templator = 0
+let g:use_utf8 = 1
+let g:use_vimtex = 0
+let g:ycm_clang = ''
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_filetype_whitelist = {'cpp': 1}
+let g:ycm_java = ''
 " ===
 
 " ===
@@ -304,7 +287,11 @@ endif
 " ===
 " Colorscheme
 " ===
-Plug 'ajmwagar/vim-deus'
+Plug 'dracula/vim',{'as':'dracula'}
+if g:use_alt_colorschemes == 1
+    Plug 'ajmwagar/vim-deus'
+    Plug 'chriskempson/base16-vim'
+endif
 " ===
 
 " ===
@@ -358,7 +345,7 @@ autocmd FileType Makefile setlocal noexpandtab
 " ===
 " Colorscheme
 " ===
-colorscheme deus
+colorscheme dracula
 " ===
 
 " ===
@@ -534,6 +521,7 @@ endif
 " ===
 if g:use_airline == 1
     let g:airline_powerline_fonts = 1
+
     if !exists('g:airline_symbols')
         let g:airline_symbols = {}
         if g:use_font == 0
@@ -550,30 +538,36 @@ if g:use_airline == 1
         endif
     endif
 
-    "" unicode symbols
-    "let g:airline_left_sep = '»'
-    "let g:airline_left_sep = '▶'
-    "let g:airline_right_sep = '«'
-    "let g:airline_right_sep = '◀'
-    "let g:airline_symbols.linenr = '␊'
-    "let g:airline_symbols.linenr = '␤'
-    "let g:airline_symbols.linenr = '¶'
-    "let g:airline_symbols.branch = '⎇'
-    "let g:airline_symbols.paste = 'ρ'
-    "let g:airline_symbols.paste = 'Þ'
-    "let g:airline_symbols.paste = '∥'
-    "let g:airline_symbols.whitespace = 'Ξ'
-    "" airline symbols
-    "let g:airline_left_sep = ''
-    "let g:airline_left_alt_sep = ''
-    "let g:airline_right_sep = ''
-    "let g:airline_right_alt_sep = ''
-    "let g:airline_symbols.branch = ''
-    "let g:airline_symbols.readonly = ''
-    "let g:airline_symbols.linenr = ''
+    " ===
+    " unicode symbols
+    " ===
+    " let g:airline_left_sep = '»'
+    " let g:airline_left_sep = '▶'
+    " let g:airline_right_sep = '«'
+    " let g:airline_right_sep = '◀'
+    " let g:airline_symbols.linenr = '␊'
+    " let g:airline_symbols.linenr = '␤'
+    " let g:airline_symbols.linenr = '¶'
+    " let g:airline_symbols.branch = '⎇'
+    " let g:airline_symbols.paste = 'ρ'
+    " let g:airline_symbols.paste = 'Þ'
+    " let g:airline_symbols.paste = '∥'
+    " let g:airline_symbols.whitespace = 'Ξ'
+    " ===
 
-    "let g:airline_theme = "badwolf"
-    let g:airline_theme = "deus"
+    " ===
+    " airline symbols
+    " ===
+    " let g:airline_left_sep = ''
+    " let g:airline_left_alt_sep = ''
+    " let g:airline_right_sep = ''
+    " let g:airline_right_alt_sep = ''
+    " let g:airline_symbols.branch = ''
+    " let g:airline_symbols.readonly = ''
+    " let g:airline_symbols.linenr = ''
+    " ===
+
+    let g:airline_theme = "dracula"
 endif
 " ===
 
