@@ -23,6 +23,8 @@ elseif g:platform ==? "xterm"
     set notermguicolors
     set guicursor=
     set t_Co=
+elseif g:platform ==? "windows_portable"
+    let g:use_font = 0
 else
     set termguicolors
 endif
@@ -99,6 +101,7 @@ let g:use_buftabline = 1
 let g:use_clang_format = 0
 let g:use_comfortable_motion = 0
 let g:use_cpp = 1
+let g:use_font = 0
 let g:use_fswitch = 1
 let g:use_fugitive = 1
 let g:use_indentguides = 1
@@ -132,12 +135,6 @@ runtime custom.vim
 " ===
 " Now these settings get applied.
 " ===
-if g:platform ==? "windows_portable"
-    let g:use_font = 0
-else
-    let g:use_font = 1
-endif
-
 if g:use_utf8 == 1
     set encoding=utf-8
 endif
