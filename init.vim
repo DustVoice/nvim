@@ -13,10 +13,12 @@ if g:platform ==? "linux"
     else
         set notermguicolors
 
+        autocmd ColorScheme dracula hi Visual cterm=reverse
+
         if $TERM ==? "linux"
-            let &t_SI = "\<esc>[5 q"  " blinking I-beam in insert mode
-            let &t_SR = "\<esc>[3 q"  " blinking underline in replace mode
-            let &t_EI = "\<esc>[ q"  " default cursor (usually blinking block) otherwise
+            " let &t_SI = "\<esc>[5 q"  " blinking I-beam in insert mode
+            " let &t_SR = "\<esc>[3 q"  " blinking underline in replace mode
+            " let &t_EI = "\<esc>[ q"  " default cursor (usually blinking block) otherwise
         endif
     endif
 elseif g:platform ==? "xterm"
@@ -49,6 +51,7 @@ set mouse=a
 filetype plugin on
 
 set autoindent
+set autoread
 set backspace=indent,eol,start
 set breakindent
 set breakindentopt=shift:4
