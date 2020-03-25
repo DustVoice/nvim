@@ -207,6 +207,10 @@ if g:use_pandoc == 1
     Plug 'vim-pandoc/vim-pandoc-syntax'
 endif
 
+if g:use_indentguides == 1
+    Plug 'thaerkh/vim-indentguides'
+endif
+
 if g:use_polyglot == 1
     Plug 'sheerun/vim-polyglot'
 endif
@@ -221,10 +225,6 @@ endif
 
 if g:use_asm_indent == 1
     Plug 'philj56/vim-asm-indent'
-endif
-
-if g:use_indentguides == 1
-    Plug 'thaerkh/vim-indentguides'
 endif
 
 if g:use_sxhkd == 1
@@ -336,9 +336,11 @@ au BufNewFile,BufRead *.s,*.S call SetupArm() " arm = armv6/7
 " ===
 " Indentguides config
 " ===
-let g:indentguides_spacechar = '•'
-let g:indentguides_tabchar = '|'
-let g:indentguides_firstlevel = 1
+if g:use_indentguides
+    let g:indentguides_spacechar = '•'
+    let g:indentguides_tabchar = '|'
+    let g:indentguides_firstlevel = 1
+endif
 " ===
 
 " ===
@@ -424,6 +426,7 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " ===
 if g:use_polyglot == 1
     let g:polyglot_disabled = ['latex']
+    let g:vim_markdown_conceal = 0
 endif
 " ===
 
