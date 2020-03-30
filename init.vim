@@ -419,7 +419,7 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " Disable polyglot for latex files
 " ===
 if g:use_polyglot == 1
-    let g:polyglot_disabled = ['latex', 'markdown']
+    let g:polyglot_disabled = ['latex']
     let g:vim_markdown_conceal = 0
 endif
 " ===
