@@ -1062,6 +1062,8 @@ if g:use_cpp == 1
 endif
 " ===
 
+set list
+
 " ===
 " Background
 " ===
