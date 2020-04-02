@@ -19,8 +19,6 @@ elseif g:platform ==? "xterm"
     set notermguicolors
     set guicursor=
     set t_Co=
-elseif g:platform ==? "windows_portable"
-    let g:use_font = 0
 else
     set termguicolors
 endif
@@ -55,6 +53,7 @@ set diffopt=filler,vertical
 set expandtab
 set ignorecase
 set incsearch
+set linebreak
 set list
 set listchars=trail:·,tab:•\ ,extends:⟩,precedes:⟨
 set number
@@ -67,7 +66,7 @@ set smartindent
 set softtabstop=4
 set splitbelow
 set splitright
-set wrap linebreak nolist
+set wrap
 
 syntax enable
 " ===
@@ -256,7 +255,7 @@ elseif g:use_autocomplete == 2
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
 elseif g:use_autocomplete == 3
-    Plug 'Valloric/YouCompleteMe'
+    Plug 'ycm-core/YouCompleteMe'
 endif
 
 if g:use_javacomplete == 1
@@ -1061,8 +1060,6 @@ if g:use_cpp == 1
     hi def link cppCustomNamespace Constant
 endif
 " ===
-
-set list
 
 " ===
 " Background
