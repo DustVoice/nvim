@@ -7,5 +7,3 @@ find . -path ./plugged -prune -o -type f -exec chmod 644 {} \;
 
 echo 'Adapting permissions of "./.restore-permissions"'
 chmod 755 ./.restore-permissions
-
-find . -path ./plugged -prune -o -type f -exec ls -l {} \;
