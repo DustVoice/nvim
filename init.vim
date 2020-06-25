@@ -607,12 +607,6 @@ endif
 " ===
 
 " ===
-" Prevent accidental vim force quit
-" ===
-nnoremap Q <nop>
-" ===
-
-" ===
 " Setup pandoc
 " ===
 if g:use_pandoc == 1
