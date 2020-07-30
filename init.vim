@@ -8,7 +8,7 @@ runtime platform.vim
 if g:platform ==? "linux"
     "autocmd VimLeave * set guicursor=a:ver35-blinkon0
     "set guicursor=
-    if $TERM ==? "alacritty"
+    if $TERM ==? "alacritty" || $TERM ==? "st-256color" || $TERM ==? "xterm-256color"
         set termguicolors
     else
         set notermguicolors
