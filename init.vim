@@ -9,7 +9,7 @@ if g:platform ==? "linux"
     "autocmd VimLeave * set guicursor=a:ver35-blinkon0
     "set guicursor=
     let supported_terminals=["alacritty", "st-256color", "xterm-256color", "screen", "screen-256color"]
-    if index(supported_terminals, $TERM) != -1
+    if index(supported_terminals, $TERM) != -1 && has("termguicolors")
         set termguicolors
     else
         set notermguicolors
