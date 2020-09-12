@@ -321,8 +321,6 @@ endif
 " ===
 function! SetupArm()
     execute('set filetype=arm')
-    execute('IndentGuidesToggle')
-    execute('IndentGuidesToggle')
 endfunction
 
 au BufNewFile,BufRead *.s,*.S call SetupArm() " arm = armv6/7
