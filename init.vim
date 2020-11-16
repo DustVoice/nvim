@@ -520,6 +520,9 @@ if g:use_vimtex == 1
     "endif
 
     "let g:vimtex_fold_enabled=1
+
+    au BufNewFile,BufRead *.cls call execute('set filetype=tex')
+" ===
 endif
 " ===
 
