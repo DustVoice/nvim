@@ -8,8 +8,8 @@ runtime platform.vim
 if g:platform ==? "linux"
     "autocmd VimLeave * set guicursor=a:ver35-blinkon0
     "set guicursor=
-    let supported_terminals=["alacritty", "st-256color", "xterm-256color", "screen"]
-    if index(supported_terminals, $TERM) != -1
+    let supported_terminals=["alacritty", "st-256color", "xterm-256color", "screen", "screen-256color"]
+    if index(supported_terminals, $TERM) != -1 && has("termguicolors")
         set termguicolors
     else
         set notermguicolors
@@ -306,13 +306,74 @@ call plug#end()
 " ===
 if g:use_clang_format == 1
     let g:clang_format#detect_style_file = 1
-    let g:clang_format#enable_fallback_style = 0
+    let g:clang_format#enable_fallback_style = 1
+
+    let g:clang_format#style = "Microsoft"
+    let g:clang_format#style_options = {
+                \ "BasedOnStyle" : "Microsoft",
+                \ "AccessModifierOffset" : -4,
+                \ "AlignAfterOpenBracket" : "Align",
+                \ "AlignConsecutiveAssignments" : "false",
+                \ "AlignConsecutiveDeclarations" : "false",
+                \ "AlignEscapedNewlinesLeft" : "false",
+                \ "AlignOperands" : "true",
+                \ "AlignTrailingComments" : "false",
+                \ "AllowAllParametersOfDeclarationOnNextLine" : "false",
+                \ "AllowShortBlocksOnASingleLine" : "false",
+                \ "AllowShortCaseLabelsOnASingleLine" : "false",
+                \ "AllowShortFunctionsOnASingleLine" : "All",
+                \ "AllowShortIfStatementsOnASingleLine" : "false",
+                \ "AllowShortLoopsOnASingleLine" : "false",
+                \ "AlwaysBreakAfterDefinitionReturnType" : "None",
+                \ "AlwaysBreakAfterReturnType" : "None",
+                \ "AlwaysBreakBeforeMultilineStrings" : "false",
+                \ "AlwaysBreakTemplateDeclarations" : "true",
+                \ "BinPackArguments" : "false",
+                \ "BinPackParameters" : "false",
+                \ "BreakAfterJavaFieldAnnotations" : "false",
+                \ "BreakBeforeBinaryOperators" : "NonAssignment",
+                \ "BreakBeforeBraces" : "Allman",
+                \ "BreakBeforeTernaryOperators" : "true",
+                \ "BreakConstructorInitializersBeforeComma" : "false",
+                \ "BreakStringLiterals" : "false",
+                \ "ColumnLimit" : 0,
+                \ "ConstructorInitializerAllOnOneLineOrOnePerLine" : "true",
+                \ "ConstructorInitializerIndentWidth" : 4,
+                \ "ContinuationIndentWidth" : 4,
+                \ "Cpp11BracedListStyle" : "false",
+                \ "DerivePointerAlignment" : "false",
+                \ "DisableFormat" : "false",
+                \ "ExperimentalAutoDetectBinPacking" : "false",
+                \ "IndentCaseLabels" : "true",
+                \ "IndentWidth" : 4,
+                \ "IndentWrappedFunctionNames" : "true",
+                \ "KeepEmptyLinesAtTheStartOfBlocks" : "false",
+                \ "Language" : "Cpp",
+                \ "MaxEmptyLinesToKeep" : 1,
+                \ "NamespaceIndentation" : "Inner",
+                \ "PointerAlignment" : "Left",
+                \ "ReflowComments" : "false",
+                \ "SortIncludes" : "true",
+                \ "SpaceAfterCStyleCast" : "true",
+                \ "SpaceBeforeAssignmentOperators" : "true",
+                \ "SpaceBeforeParens" : "ControlStatements",
+                \ "SpaceInEmptyParentheses" : "false",
+                \ "SpacesInAngles" : "false",
+                \ "SpacesInCStyleCastParentheses" : "false",
+                \ "SpacesInContainerLiterals" : "true",
+                \ "SpacesInParentheses" : "false",
+                \ "SpacesInSquareBrackets" : "false",
+                \ "Standard" : "Cpp11",
+                \ "TabWidth" : 4,
+                \ "UseTab" : "Never" }
+
+    let g:clang_format#auto_format = 1
+    let g:clang_format#auto_format_on_insert_leave = 0
 
     autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
     autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
-    autocmd FileType c,cpp,objc let g:clang_format#auto_format = 1
-    autocmd FileType c,cpp,objc let g:clang_format#auto_format_on_insert_leave = 0
+    nmap <Leader>ct :ClangFormatAutoToggle<CR>
 endif
 " ===
 
@@ -321,8 +382,6 @@ endif
 " ===
 function! SetupArm()
     execute('set filetype=arm')
-    execute('IndentGuidesToggle')
-    execute('IndentGuidesToggle')
 endfunction
 
 au BufNewFile,BufRead *.s,*.S call SetupArm() " arm = armv6/7
@@ -461,6 +520,9 @@ if g:use_vimtex == 1
     "endif
 
     "let g:vimtex_fold_enabled=1
+
+    au BufNewFile,BufRead *.cls call execute('set filetype=tex')
+" ===
 endif
 " ===
 
