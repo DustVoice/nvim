@@ -490,7 +490,7 @@ if g:use_vimtex == 1
     let g:polyglot_disabled = ['latex', 'tex']
 
     let g:tex_flavor='latex'
-    let g:vimtex_syntax_autoload_packages = ['hyperref', 'listings', 'luacode', 'minted']
+    "let g:vimtex_syntax_packages = {'hyperref':{'load':2}, 'listings':{'load':2}, 'luacode':{'load':2}, 'minted':{'load':2}}
     let g:vimtex_format_enabled = 1
     let g:vimtex_indent_enabled = 1
 
