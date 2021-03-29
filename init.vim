@@ -591,11 +591,7 @@ if g:use_coc == 1
 
     set shortmess+=c
 
-    if has("patch-8.1.1564")
-        set signcolumn=number
-    else
-        set signcolumn=yes
-    endif
+    set signcolumn=yes
 
     inoremap <silent><expr> <C-Space> coc#refresh()
 
@@ -626,14 +622,25 @@ if g:use_coc == 1
     xmap <leader>f  <Plug>(coc-format-selected)
     nmap <leader>f  <Plug>(coc-format-selected)
 
-    xmap <leader>a  <Plug>(coc-codeaction-selected)
-    nmap <leader>a  <Plug>(coc-codeaction-selected)
     nmap <leader>ac  <Plug>(coc-codeaction)
     nmap <leader>qf  <Plug>(coc-fix-current)
 
+    if has('nvim-0.4.0') || has('patch-8.2.0750')
+        nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+        nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+        inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+        inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+        vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+        vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+    endif
+
+    command! -nargs=0 Format :call CocAction('format')
+    command! -nargs=? Fold :call CocAction('fold', <f-args>)
+    command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+
     nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<CR>
 
-    let g:coc_gloabl_extensions = ['coc-clangd', 'coc-cmake', 'coc-html', 'coc-html-css-support', 'coc-java', 'coc-json', 'coc-markdownlint', 'coc-omnisharp', 'coc-prettier', 'coc-pyright', 'coc-rust-analyzer', 'coc-sh', 'coc-snippets', 'coc-xml', 'coc-yank']
+    let g:coc_global_extensions = ['coc-clangd', 'coc-cmake', 'coc-html', 'coc-html-css-support', 'coc-java', 'coc-json', 'coc-lists', 'coc-markdownlint', 'coc-omnisharp', 'coc-prettier', 'coc-pyright', 'coc-rust-analyzer', 'coc-sh', 'coc-snippets', 'coc-xml', 'coc-yank']
 endif
 " ===
 
