@@ -472,10 +472,14 @@ endif
 " Setup F11/S-F11 for fullscreen/maximize toggle
 " ===
 function! FullScreenToggle()
-    if g:GuiWindowFullScreen==1
-        call GuiWindowFullScreen(0)
+    if exists('g:neovide')
+        let g:neovide_fullscreen = !g:neovide_fullscreen
     else
-        call GuiWindowFullScreen(1)
+        if g:GuiWindowFullScreen==1
+            call GuiWindowFullScreen(0)
+        else
+            call GuiWindowFullScreen(1)
+        endif
     endif
 endfunction
 
@@ -487,8 +491,12 @@ function! MaximizedToggle()
     endif
 endfunction
 
-nnoremap <silent> <F11> :call MaximizedToggle()<CR>
-nnoremap <silent> <S-F11> :call FullScreenToggle()<CR>
+if exists('g:neovide')
+	nnoremap <silent> <F11> :call FullScreenToggle()<CR>
+else
+	nnoremap <silent> <F11> :call MaximizedToggle()<CR>
+    nnoremap <silent> <S-F11> :call FullScreenToggle()<CR>
+endif
 " ===
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
