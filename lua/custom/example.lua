@@ -1,0 +1,4 @@
+--Here you can define your own custom settings like
+--vim.g.use_sound = true
+--vim.g.use_autocomplete = true
+--vim.g.use_coc = true

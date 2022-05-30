@@ -7,10 +7,13 @@
 !/coc-settings.json
 !/custom.vim.example
 !/ginit.vim
+!/init.lua
 !/init.vim
 !/platform.vim.example
 !/TODO.txt
 
-!/colors/
 !/autoload/
+!/colors/
+!/lua/
+!/pack/
 !/spell/
