@@ -1,13 +1,18 @@
-vim.cmd([[
-    augroup packer_user_config
-        autocmd!
-        autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-    augroup end
-]])
+-- vim.cmd([[
+--     augroup packer_user_config
+--         autocmd!
+--         autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+--     augroup end
+-- ]])
 
 return require('packer').startup(function(use)
     -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+    use {
+        'wbthomason/packer.nvim',
+        config = function()
+            vim.keymap.set('n', '<leader>ps', ':PackerSync<cr>', { noremap = true })
+        end
+    }
 
     -- ===
     -- Core
@@ -38,10 +43,46 @@ return require('packer').startup(function(use)
             config = function()
                 require('lualine').setup {
                     options = {
-                        theme = 'dracula'
+                        theme = 'dracula',
+                        component_separators = { left = '', right = '' },
+                        section_separators = { left = '', right = '' },
+                        icons_enabled = true,
+                        globalstatus = true
                     }
                 }
             end
+        }
+    end
+
+    if vim.g.use_tabline == true then
+        use {
+            'kdheepak/tabline.nvim',
+            config = function()
+                require('tabline').setup {
+                    -- Defaults configuration options
+                    enable = true,
+                    options = {
+                        -- If lualine is installed tabline will use separators configured in lualine by default.
+                        -- These options can be used to override those settings.
+                        --section_separators = {'', ''},
+                        --component_separators = {'', ''},
+                        --max_bufferline_percent = 66, -- set to nil by default, and it uses vim.o.columns * 2/3
+                        show_tabs_always = true, -- this shows tabs only when there are more than one tab or if the first tab is named
+                        show_devicons = false, -- this shows devicons in buffer section
+                        show_bufnr = false, -- this appends [bufnr] to buffer section,
+                        show_filename_only = false, -- shows base filename only instead of relative path in filename
+                        modified_icon = "+ ", -- change the default modified icon
+                        modified_italic = false, -- set to true by default; this determines whether the filename turns italic if modified
+                        show_tabs_only = false, -- this shows only tabs instead of tabs + buffers
+                    }
+                }
+
+                vim.cmd([[
+                set guioptions-=e " Use showtabline in gui vim
+                set sessionoptions+=tabpages,globals " store tabpages and globals in session
+                ]])
+            end
+            -- requires = { { 'nvim-lualine/lualine.nvim', opt=true }, {'kyazdani42/nvim-web-devicons', opt = true} }
         }
     end
 
@@ -169,6 +210,11 @@ return require('packer').startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} },
         config = function()
             require('telescope').setup()
+
+            vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files theme=dropdown<cr>', { noremap = true })
+            vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep theme=dropdown<cr>', { noremap = true })
+            vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers theme=dropdown<cr>', { noremap = true })
+            vim.keymap.set('n', '<leader>fd', '<cmd>Telescope builtin theme=dropdown<cr>', { noremap = true })
         end
     }
     -- ===

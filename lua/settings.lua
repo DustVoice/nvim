@@ -108,7 +108,7 @@ local config = {
     use_async = true,
     use_autocomplete = 0,
     use_bufkill = true,
-    use_buftabline = true,
+    use_buftabline = false,
     use_clang_format = false,
     use_coc = false,
     use_comfortable_motion = false,
@@ -130,6 +130,7 @@ local config = {
     use_rust = true,
     use_sound = false,
     use_sxhkd = true,
+    use_tabline = true,
     use_templator = false,
     use_utf8 = true,
     use_vimtex = true,
@@ -191,12 +192,6 @@ vim.cmd([[
     autocmd BufWinEnter,BufEnter,FocusGained,InsertLeave * set relativenumber
     autocmd BufWinLeave,BufLeave,FocusLost,InsertEnter   * set norelativenumber
 ]])
--- ===
-
--- ===
--- Colorscheme
--- ===
-vim.cmd('colorscheme dracula')
 -- ===
 
 --vim.cmd("hi LineNr guifg=#B0BEC5")

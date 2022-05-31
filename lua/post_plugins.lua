@@ -1,3 +1,6 @@
+-- ===
+-- Configure the on_attach function that defines keymaps
+-- ===
 local lspconfig = require('lspconfig')
 
 local opts = { noremap = true, silent = true }
@@ -37,3 +40,10 @@ for _, lsp in pairs(servers) do
         on_attach = on_attach
     }
 end
+-- ===
+
+-- ===
+-- Colorscheme
+-- ===
+vim.cmd('colorscheme dracula')
+-- ===
