@@ -1,9 +1,9 @@
--- vim.cmd([[
---     augroup packer_user_config
---         autocmd!
---         autocmd BufWritePost plugins.lua source <afile> | PackerCompile
---     augroup end
--- ]])
+vim.cmd([[
+    augroup packer_user_config
+        autocmd!
+        autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+    augroup end
+]])
 
 return require('packer').startup(function(use)
     -- Packer can manage itself
@@ -135,6 +135,10 @@ return require('packer').startup(function(use)
         use 'ARM9/arm-syntax-vim'
     end
 
+    if vim.g.use_gas == true then
+        use 'Shirk/vim-gas'
+    end
+
     if vim.g.use_asm_indent == true then
         use 'philj56/vim-asm-indent'
     end
@@ -190,6 +194,7 @@ return require('packer').startup(function(use)
                             }
                         }
                     }
+                    lspconfig.rust_analyzer.setup {}
                 end
             },
         }
@@ -272,6 +277,13 @@ return require('packer').startup(function(use)
     -- ===
 
     -- ===
+    -- Fish
+    -- ===
+    if vim.g.use_fish == true then
+        use 'nickeb96/fish.vim'
+    end
+
+    -- ===
     -- Special functionality
     -- ===
     if vim.g.use_python == true then
@@ -294,10 +306,27 @@ return require('packer').startup(function(use)
     -- ===
     -- Colorscheme
     -- ===
-    use {'dracula/vim', as = 'dracula'}
-    use {'catppuccin/nvim', as = 'catppuccin'}
+    use {
+        "themercorp/themer.lua",
+        config = function()
+            require("themer").setup({
+                colorscheme = "dracula",
+                styles = {
+                    ["function"] = { style = 'italic' },
+                    functionbuiltin = { style = 'italic' },
+                    variable = { style = 'italic' },
+                    variableBuiltIn = { style = 'italic' },
+                    parameter  = { style = 'italic' },
+                },
+            })
+        end
+    }
 
     if vim.g.use_alt_colorschemes == true then
+        use {'dracula/vim', as = 'dracula.vim'}
+        use {'Mofiqul/dracula.nvim', as = 'dracula.nvim'}
+        use {'catppuccin/nvim', as = 'catppuccin.nvim'}
+
         use 'ajmwagar/vim-deus'
         use 'chriskempson/base16-vim'
     end

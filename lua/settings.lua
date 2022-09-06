@@ -1,9 +1,19 @@
+if string.match(vim.opt.shell["_value"], 'fish$') then
+    if vim.fn.executable('zsh') then
+        vim.opt.shell = "zsh"
+    elseif vim.fn.executable('bash') then
+        vim.opt.shell = "bash"
+    else
+        vim.opt.shell = "sh"
+    end
+end
+
 HOME = os.getenv("HOME")
 
 vim.opt.compatible = false
 
 -- ===
--- Platform specific settings. Configure your platform in iniinitlua, in the platform dir.
+-- Platform specific settings. Configure your platform in init.lua, in the platform dir.
 -- ===
 if vim.g.platform == "linux" then
     -- vim.cmd('autocmd VimLeave * set guicursor=a:ver35-blinkon0')
@@ -24,18 +34,27 @@ if vim.g.platform == "linux" then
     else
         vim.opt.termguicolors = false
 
-        vim.cmd('autocmd ColorScheme dracula hi Visual cterm=reverse')
+        vim.cmd('autocmd ColorScheme themer_dracula hi Visual cterm=reverse')
     end
 elseif vim.g.platform == "xterm" then
     vim.opt.termguicolors = false
     vim.opt.guicursor = ""
     vim.opt.t_Co = ""
-    vim.cmd('autocmd ColorScheme dracula hi Visual cterm=reverse')
+    vim.cmd('autocmd ColorScheme themer_dracula hi Visual cterm=reverse')
 else
     vim.opt.termguicolors = true
 end
 
 vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
+-- ===
+
+-- ===
+-- Deacivate termguicolors on entering the terminal to display the colors correctly
+-- ===
+vim.cmd([[
+    autocmd TermEnter * set notermguicolors
+    autocmd TermLeave * set   termguicolors
+]])
 -- ===
 
 -- ===
@@ -102,7 +121,7 @@ local config = {
 
     use_airline = false,
     use_alt_colorschemes = true,
-    use_arm_syntax = false,
+    use_arm_syntax = true,
     use_asciidoctor = true,
     use_asm_indent = true,
     use_async = true,
@@ -113,9 +132,11 @@ local config = {
     use_coc = false,
     use_comfortable_motion = false,
     use_cpp = true,
+    use_fish = true,
     use_font = false,
     use_fswitch = true,
     use_fugitive = true,
+    use_gas = true,
     use_indentguides = false,
     use_javacomplete = false,
     use_latexmk = false,
@@ -141,7 +162,7 @@ local config = {
 }
 
 for key, value in pairs(config) do
-    if not vim.g[key] then
+    if vim.g[key] == nil then
         vim.g[key] = value
     end
 end
@@ -167,13 +188,22 @@ end
 -- ===
 -- arm-assembly
 -- ===
-vim.cmd([[
-    function! SetupArm()
-        execute('set filetype=arm')
-    endfunction
-
-    au BufNewFile,BufRead *.s,*.S call SetupArm() " arm = armv6/7
-]])
+-- vim.cmd([[
+--     function! SetupArm()
+--         execute('set filetype=arm')
+--     endfunction
+-- 
+--     au BufNewFile,BufRead *.s,*.S call SetupArm() " arm = armv6/7
+-- ]])
+--
+-- Use
+-- @ vim:ft=armv5 at top/bottom of assembly file instead
+-- ===
+-- GNU assembly, use
+-- /* vim: ft=gas :
+-- */
+--
+-- at end of file
 -- ===
 
 -- ===

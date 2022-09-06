@@ -45,5 +45,6 @@ end
 -- ===
 -- Colorscheme
 -- ===
-vim.cmd('colorscheme dracula')
+-- vim.cmd('colorscheme dracula')
+-- Themer takes care of this
 -- ===

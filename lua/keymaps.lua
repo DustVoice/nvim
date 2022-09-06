@@ -4,7 +4,7 @@
 vim.keymap.set('n', '<leader>cd', ':cd %:p:h<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>lcd', ':lcd %:p:h<CR>', { noremap = true, silent = true })
 
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
+vim.keymap.set('t', '<C-w><Esc>', '<C-\\><C-n>', { noremap = true })
 
 vim.keymap.set('n', '<leader>+', '<C-W>+', { noremap = true })
 vim.keymap.set('n', '<leader>-', '<C-W>-', { noremap = true })
