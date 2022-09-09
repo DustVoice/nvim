@@ -154,3 +154,18 @@ vim.cmd([[
     command! SynStack :call SynStack()
 ]])
 -- ===
+
+-- ===
+-- Switch to fish shell in :term
+-- ===
+vim.cmd([[
+    function! FishTerm()
+        if exists("g:replacement_shell")
+            let &shell = "fish"
+            execute "term"
+            let &shell = g:replacement_shell
+        endif
+    endfunction
+
+    command! FishTerm :call FishTerm()
+]])

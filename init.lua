@@ -1,6 +1,7 @@
 require('platform')
 require('custom')
 require('settings')
+require('pre_plugins')
 require('plugins')
 require('post_plugins')
 require('plugin_options')

@@ -1,16 +1,19 @@
-if string.match(vim.opt.shell["_value"], 'fish$') then
-    if vim.fn.executable('zsh') then
-        vim.opt.shell = "zsh"
-    elseif vim.fn.executable('bash') then
-        vim.opt.shell = "bash"
-    else
-        vim.opt.shell = "sh"
-    end
-end
-
 HOME = os.getenv("HOME")
 
 vim.opt.compatible = false
+
+if string.match(vim.opt.shell["_value"], 'fish$') then
+    if vim.fn.executable('zsh') then
+        vim.opt.shell = "zsh"
+        vim.g.replacement_shell = "zsh"
+    elseif vim.fn.executable('bash') then
+        vim.opt.shell = "bash"
+        vim.g.replacement_shell = "bash"
+    else
+        vim.opt.shell = "sh"
+        vim.g.replacement_shell = "sh"
+    end
+end
 
 -- ===
 -- Platform specific settings. Configure your platform in init.lua, in the platform dir.
@@ -34,13 +37,19 @@ if vim.g.platform == "linux" then
     else
         vim.opt.termguicolors = false
 
-        vim.cmd('autocmd ColorScheme themer_dracula hi Visual cterm=reverse')
+        vim.api.nvim_create_autocmd('ColorScheme', {
+            pattern = 'themer_dracula',
+            command = 'hi Visual cterm=reverse',
+        })
     end
 elseif vim.g.platform == "xterm" then
     vim.opt.termguicolors = false
     vim.opt.guicursor = ""
     vim.opt.t_Co = ""
-    vim.cmd('autocmd ColorScheme themer_dracula hi Visual cterm=reverse')
+    vim.api.nvim_create_autocmd('ColorScheme', {
+        pattern = 'themer_dracula',
+        command = 'hi Visual cterm=reverse',
+    })
 else
     vim.opt.termguicolors = true
 end
@@ -51,10 +60,22 @@ vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
 -- ===
 -- Deacivate termguicolors on entering the terminal to display the colors correctly
 -- ===
-vim.cmd([[
-    autocmd TermEnter * set notermguicolors
-    autocmd TermLeave * set   termguicolors
-]])
+vim.api.nvim_create_autocmd('TermEnter', {
+    pattern = '*',
+    callback = function()
+        vim.opt.termguicolors = false
+    end,
+})
+vim.api.nvim_create_autocmd('TermLeave', {
+    pattern = '*',
+    callback = function()
+        vim.opt.termguicolors = true
+
+        if vim.g.replacement_shell ~= nil and vim.fn.executable(vim.g.replacement_shell) then
+            vim.opt.shell = vim.g.replacement_shell
+        end
+    end,
+})
 -- ===
 
 -- ===
@@ -84,6 +105,7 @@ vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.breakindent = true
 vim.opt.breakindentopt = "shift:4"
 vim.opt.clipboard = "unnamedplus"
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.confirm = true
 vim.opt.diffopt = { "filler", "vertical" }
 vim.opt.expandtab = true
@@ -209,20 +231,30 @@ end
 -- ===
 -- When to use 'normal' tabs
 -- ===
-vim.cmd([[
-    autocmd FileType make setlocal noexpandtab
-    autocmd FileType Makefile setlocal noexpandtab
-]])
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'make', 'Makefile' },
+    callback = function()
+        vim.opt_local.expandtab = false
+    end,
+})
 -- ===
 
 -- ===
 -- Don't schow relative numbers in insert mode, but show them in normal mode
 -- ===
-vim.cmd([[
-    autocmd BufWinEnter,BufEnter,FocusGained,InsertLeave * set relativenumber
-    autocmd BufWinLeave,BufLeave,FocusLost,InsertEnter   * set norelativenumber
-]])
+vim.api.nvim_create_autocmd({'BufWinEnter', 'BufEnter', 'FocusGained', 'InsertLeave' }, {
+    pattern = '*',
+    callback = function()
+        vim.opt.relativenumber = true
+    end,
+})
+vim.api.nvim_create_autocmd({'BufWinLeave', 'BufLeave', 'FocusLost', 'InsertEnter' }, {
+    pattern = '*',
+    callback = function()
+        vim.opt.relativenumber = false
+    end,
+})
 -- ===
 
---vim.cmd("hi LineNr guifg=#B0BEC5")
---vim.cmd("hi CursorLineNr guifg=#64FFDA")
+-- vim.cmd("hi LineNr guifg=#B0BEC5")
+-- vim.cmd("hi CursorLineNr guifg=#64FFDA")

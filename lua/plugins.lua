@@ -1,9 +1,8 @@
-vim.cmd([[
-    augroup packer_user_config
-        autocmd!
-        autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-    augroup end
-]])
+vim.api.nvim_create_autocmd('BufWritePost', {
+    group = vim.api.nvim_create_augroup('packer_user_config', { clear = true }),
+    pattern = 'plugins.lua',
+    command = 'source <afile> | PackerCompile',
+})
 
 return require('packer').startup(function(use)
     -- Packer can manage itself
@@ -169,35 +168,199 @@ return require('packer').startup(function(use)
     -- ===
     if vim.g.use_lsp == true then
         use {
-            'williamboman/nvim-lsp-installer',
+            'neovim/nvim-lspconfig',
             {
-                'neovim/nvim-lspconfig',
+                'williamboman/mason.nvim',
+                after = 'nvim-lspconfig',
                 config = function()
-                    require("nvim-lsp-installer").setup {}
-                    local lspconfig = require("lspconfig")
-                    lspconfig.sumneko_lua.setup {
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = { 'vim' }
-                                },
-                                runtime = {
-                                    version = "LuaJIT",
-                                    path = vim.split(package.path, ";")
-                                },
-                                workspace = {
-                                    library = {
-                                        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                                        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+                    require("mason").setup()
+                end
+            },
+            {
+                'williamboman/mason-lspconfig.nvim',
+                requires = 'simrat39/rust-tools.nvim',
+                after = {
+                    'mason.nvim',
+                    'nvim-cmp',
+                },
+                config = function()
+                    require("mason-lspconfig").setup {
+                        ensure_installed = {
+                            "sumneko_lua",
+                            "rust_analyzer"
+                        }
+                    }
+
+                    local opts = { noremap = true, silent = true }
+
+                    -- Use an on_attach function to only map the following keys
+                    -- after the language server attaches to the current buffer
+                    -- on_attach := function(client, bufnr)
+                    local on_attach = function(_, bufnr)
+                        -- Enable completion triggered by <c-x><c-o>
+                        vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+                        -- Mappings.
+                        -- See `:help vim.lsp.*` for documentation on any of the below functions
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+                        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+                    end
+
+                    local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+                    require("mason-lspconfig").setup_handlers {
+                        function (server_name)
+                            require("lspconfig")[server_name].setup {
+                                on_attach = on_attach,
+                                capabilities = capabilities
+                            }
+                        end,
+
+                        ["sumneko_lua"] = function()
+                            require("lspconfig").sumneko_lua.setup {
+                                settings = {
+                                    Lua = {
+                                        diagnostics = {
+                                            globals = { 'vim' }
+                                        },
+                                        runtime = {
+                                            version = "LuaJIT",
+                                            path = vim.split(package.path, ";")
+                                        },
+                                        workspace = {
+                                            library = {
+                                                [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                                                [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+                                            }
+                                        }
                                     }
                                 }
                             }
-                        }
+                        end,
+
+                        ["rust_analyzer"] = function ()
+                            require("rust-tools").setup {}
+                        end,
                     }
-                    lspconfig.rust_analyzer.setup {}
                 end
             },
         }
+
+        use {
+            {
+                'hrsh7th/cmp-nvim-lsp',
+                'hrsh7th/cmp-buffer',
+                'hrsh7th/cmp-path',
+                'hrsh7th/cmp-cmdline',
+                { 'petertriho/cmp-git', requires = 'nvim-lua/plenary.nvim' },
+                { 'saadparwaiz1/cmp_luasnip', requires = 'L3MON4D3/LuaSnip' },
+                { 'mtoohey31/cmp-fish', ft = 'fish' },
+                {
+                    'saecki/crates.nvim',
+                    event = { "BufRead Cargo.toml" },
+                    requires = { { 'nvim-lua/plenary.nvim' } },
+                    config = function()
+                        require('crates').setup()
+                    end,
+                },
+            },
+
+            {
+                'hrsh7th/nvim-cmp',
+                after = {
+                    'cmp-nvim-lsp',
+                    'cmp-buffer',
+                    'cmp-path',
+                    'cmp-cmdline',
+                    'cmp-git',
+                    'cmp_luasnip',
+                },
+                config = function()
+                    local cmp = require("cmp")
+
+                    cmp.setup {
+                        snippet = {
+                            expand = function(args)
+                                require('luasnip').lsp_expand(args.body)
+                            end,
+                        },
+
+                        window = {
+                            completion = cmp.config.window.bordered(),
+                            documentation = cmp.config.window.bordered(),
+                        },
+
+                        mapping = cmp.mapping.preset.insert({
+                            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                            ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                            ['<C-Space>'] = cmp.mapping.complete(),
+                            ['<C-e>'] = cmp.mapping.abort(),
+                            ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                        }),
+
+                        sources = cmp.config.sources({
+                            { name = 'nvim_lsp' },
+                            { name = 'luasnip' },
+                        }, {
+                            { name = 'buffer' },
+                        })
+                    }
+
+                    -- Set configuration for specific filetype.
+                    cmp.setup.filetype('gitcommit', {
+                        sources = cmp.config.sources({
+                            { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+                        }, {
+                            { name = 'buffer' },
+                        })
+                    })
+
+                    cmp.setup.filetype('fish', {
+                        sources = cmp.config.sources({
+                            { name = 'fish' }, -- You can specify the `cmp_git` source if you were installed it.
+                        })
+                    })
+
+                    -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+                    cmp.setup.cmdline('/', {
+                        mapping = cmp.mapping.preset.cmdline(),
+                        sources = {
+                            { name = 'buffer' }
+                        }
+                    })
+
+                    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+                    cmp.setup.cmdline(':', {
+                        mapping = cmp.mapping.preset.cmdline(),
+                        sources = cmp.config.sources({
+                            { name = 'path' }
+                        }, {
+                            { name = 'cmdline' }
+                        })
+                    })
+
+                    vim.api.nvim_create_autocmd("BufRead", {
+                        group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
+                        pattern = "Cargo.toml",
+                        callback = function()
+                            cmp.setup.buffer({ sources = { { name = "crates" } } })
+                        end,
+                    })
+                end,
+            },
+        }
+
         use 'tami5/lspsaga.nvim'
     end
     -- ===
@@ -272,7 +435,9 @@ return require('packer').startup(function(use)
     -- Rust
     -- ===
     if vim.g.use_rust == true then
-        use 'rust-lang/rust.vim'
+        use {
+            'rust-lang/rust.vim',
+        }
     end
     -- ===
 

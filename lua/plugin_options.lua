@@ -73,7 +73,7 @@ if vim.g.use_clang_format == true then
         autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
     ]])
 
-    vim.keymap.set('n', '<leader>ct', ':ClangFormatAutoToggle<cr>')
+    vim.keymap.set('n', '<leader>ct', ':ClangFormatAutoToggle<cr>', { noremap = true })
 end
 -- ===
 
@@ -363,7 +363,7 @@ end
 -- Setup Nerdtree
 -- ===
 if vim.g.use_nerdtree == true then
-    vim.keymap.set({ 'n', 'v', 'o' }, 'map <leader>n', ':NERDTreeToggle<CR>')
+    vim.keymap.set({ 'n', 'v', 'o' }, '<leader>n', ':NERDTreeToggle<CR>', { noremap = true })
 end
 -- ===
 
@@ -604,15 +604,15 @@ if vim.g.use_pandoc == true then
         endfunction
     ]])
 
-    vim.keymap.set('n', '<leader>pm :call', 'ConvertPandoc("md-to-pdf")<CR><CR>')
-    vim.keymap.set('n', '<leader>pM :call', 'ConvertPandoc("md-html-to-pdf")<CR><CR>')
-    vim.keymap.set('n', '<leader>ph :call', 'ConvertPandoc("md-to-html")<CR><CR>')
-    vim.keymap.set('n', '<leader>pl :call', 'ConvertPandocPdfLatex()<CR><CR>')
-    vim.keymap.set('n', '<leader>pd :call', 'ConvertPandocPdfLatexDebug()<CR>')
-    vim.keymap.set('n', '<leader>pp :AsyncStop<CR>:call', 'OpenPdf()<CR>')
-    vim.keymap.set('n', '<leader>po', ':AsyncStop<CR>:AsyncRun<Space>sumatrapdf<Space>')
+    vim.keymap.set('n', '<leader>pm :call', 'ConvertPandoc("md-to-pdf")<CR><CR>', { noremap = true })
+    vim.keymap.set('n', '<leader>pM :call', 'ConvertPandoc("md-html-to-pdf")<CR><CR>', { noremap = true })
+    vim.keymap.set('n', '<leader>ph :call', 'ConvertPandoc("md-to-html")<CR><CR>', { noremap = true })
+    vim.keymap.set('n', '<leader>pl :call', 'ConvertPandocPdfLatex()<CR><CR>', { noremap = true })
+    vim.keymap.set('n', '<leader>pd :call', 'ConvertPandocPdfLatexDebug()<CR>', { noremap = true })
+    vim.keymap.set('n', '<leader>pp :AsyncStop<CR>:call', 'OpenPdf()<CR>', { noremap = true })
+    vim.keymap.set('n', '<leader>po', ':AsyncStop<CR>:AsyncRun<Space>sumatrapdf<Space>', { noremap = true })
 
-    vim.keymap.set('n', '<leader>pc :call', 'ToggleCompileOnSave()<CR>')
+    vim.keymap.set('n', '<leader>pc :call', 'ToggleCompileOnSave()<CR>', { noremap = true })
 
     --vim.cmd('autocmd FileType pandoc autocmd BufWritePost <buffer> call ConvertPandoc(g:pandoc_default) | execute("normal \<CR>")')
     vim.cmd('autocmd FileType pandoc silent autocmd BufWritePost <buffer> silent! call ConvertPandocOnSave(g:pandoc_default')
@@ -715,11 +715,11 @@ if vim.g.use_asciidoctor == true then
         endfunction
     ]])
 
-    vim.keymap.set('n', '<leader>aa :call', 'AsciidoctorConvert()<CR>')
-    vim.keymap.set('n', '<leader>ap :call', 'AsciidoctorPdfConvert()<CR>')
-    vim.keymap.set('n', '<leader>ae :call', 'AsciidoctorEpubConvert()<CR>')
+    vim.keymap.set('n', '<leader>aa :call', 'AsciidoctorConvert()<CR>', { noremap = true })
+    vim.keymap.set('n', '<leader>ap :call', 'AsciidoctorPdfConvert()<CR>', { noremap = true })
+    vim.keymap.set('n', '<leader>ae :call', 'AsciidoctorEpubConvert()<CR>', { noremap = true })
 
-    vim.keymap.set('n', '<leader>ant', 'i[.lightbox, cols="^2,^2", {LIGHTBOX}]<CR>\\|===<CR>\\|===<CR><ESC>kk')
-    vim.keymap.set('n', '<leader>ani', 'aimage:./images/picture.jpg[picture, {POPUP}]<ESC>')
+    vim.keymap.set('n', '<leader>ant', 'i[.lightbox, cols="^2,^2", {LIGHTBOX}]<CR>\\|===<CR>\\|===<CR><ESC>kk', { noremap = true })
+    vim.keymap.set('n', '<leader>ani', 'aimage:./images/picture.jpg[picture, {POPUP}]<ESC>', { noremap = true })
 end
 -- ===
