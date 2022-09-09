@@ -258,33 +258,26 @@ return require('packer').startup(function(use)
         }
 
         use {
-            {
-                'hrsh7th/cmp-nvim-lsp',
-                'hrsh7th/cmp-buffer',
-                'hrsh7th/cmp-path',
-                'hrsh7th/cmp-cmdline',
-                { 'petertriho/cmp-git', requires = 'nvim-lua/plenary.nvim' },
-                { 'saadparwaiz1/cmp_luasnip', requires = 'L3MON4D3/LuaSnip' },
-                { 'mtoohey31/cmp-fish', ft = 'fish' },
-                {
-                    'saecki/crates.nvim',
-                    event = { "BufRead Cargo.toml" },
-                    requires = { { 'nvim-lua/plenary.nvim' } },
-                    config = function()
-                        require('crates').setup()
-                    end,
-                },
-            },
-
-            {
                 'hrsh7th/nvim-cmp',
-                after = {
-                    'cmp-nvim-lsp',
-                    'cmp-buffer',
-                    'cmp-path',
-                    'cmp-cmdline',
-                    'cmp-git',
-                    'cmp_luasnip',
+                requires = {
+                    'hrsh7th/cmp-nvim-lsp',
+                    'hrsh7th/cmp-buffer',
+                    'hrsh7th/cmp-path',
+                    'hrsh7th/cmp-cmdline',
+                    { 'petertriho/cmp-git', requires = 'nvim-lua/plenary.nvim' },
+                    { 'saadparwaiz1/cmp_luasnip', requires = 'L3MON4D3/LuaSnip' },
+                    { 'mtoohey31/cmp-fish', ft = 'fish' },
+                    {
+                        'saecki/crates.nvim',
+                        event = { "BufRead Cargo.toml" },
+                        requires = { { 'nvim-lua/plenary.nvim' } },
+                        config = function()
+                            require('crates').setup()
+                        end,
+                    },
+                    --'dmitmel/cmp-cmdline-history',
+                    'kdheepak/cmp-latex-symbols',
+                    'hrsh7th/cmp-nvim-lsp-signature-help',
                 },
                 config = function()
                     local cmp = require("cmp")
@@ -312,8 +305,10 @@ return require('packer').startup(function(use)
                         sources = cmp.config.sources({
                             { name = 'nvim_lsp' },
                             { name = 'luasnip' },
+                            { name = 'nvim_lsp_signature_help' },
+                            { name = 'latex_symbols' },
                         }, {
-                            { name = 'buffer' },
+                            { name = 'buffer', keyword_length = 3 },
                         })
                     }
 
@@ -322,7 +317,7 @@ return require('packer').startup(function(use)
                         sources = cmp.config.sources({
                             { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
                         }, {
-                            { name = 'buffer' },
+                            { name = 'buffer', keyword_length = 3 },
                         })
                     })
 
@@ -336,7 +331,7 @@ return require('packer').startup(function(use)
                     cmp.setup.cmdline('/', {
                         mapping = cmp.mapping.preset.cmdline(),
                         sources = {
-                            { name = 'buffer' }
+                            { name = 'buffer', keyword_length = 3 }
                         }
                     })
 
@@ -344,11 +339,19 @@ return require('packer').startup(function(use)
                     cmp.setup.cmdline(':', {
                         mapping = cmp.mapping.preset.cmdline(),
                         sources = cmp.config.sources({
-                            { name = 'path' }
+                            { name = 'path', keyword_length = 3 }
                         }, {
-                            { name = 'cmdline' }
+                            { name = 'cmdline', keyword_length = 3 }
                         })
                     })
+
+                    -- for _, cmd_type in ipairs({':', '/', '?', '@'}) do
+                    --     cmp.setup.cmdline(cmd_type, {
+                    --         sources = {
+                    --             { name = 'cmdline_history', keyword_length = 3 },
+                    --         },
+                    --     })
+                    -- end
 
                     vim.api.nvim_create_autocmd("BufRead", {
                         group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
@@ -358,8 +361,7 @@ return require('packer').startup(function(use)
                         end,
                     })
                 end,
-            },
-        }
+            }
 
         use 'tami5/lspsaga.nvim'
     end
@@ -473,6 +475,7 @@ return require('packer').startup(function(use)
     -- ===
     use {
         "themercorp/themer.lua",
+        opt = false,
         config = function()
             require("themer").setup({
                 colorscheme = "dracula",
@@ -488,8 +491,8 @@ return require('packer').startup(function(use)
     }
 
     if vim.g.use_alt_colorschemes == true then
-        use {'dracula/vim', as = 'dracula.vim'}
-        use {'Mofiqul/dracula.nvim', as = 'dracula.nvim'}
+        --use {'dracula/vim', as = 'dracula.vim'}
+        --use {'Mofiqul/dracula.nvim', as = 'dracula.nvim'}
         use {'catppuccin/nvim', as = 'catppuccin.nvim'}
 
         use 'ajmwagar/vim-deus'

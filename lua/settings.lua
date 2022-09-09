@@ -37,19 +37,19 @@ if vim.g.platform == "linux" then
     else
         vim.opt.termguicolors = false
 
-        vim.api.nvim_create_autocmd('ColorScheme', {
-            pattern = 'themer_dracula',
-            command = 'hi Visual cterm=reverse',
-        })
+        --vim.api.nvim_create_autocmd('ColorScheme', {
+            --pattern = 'themer_dracula',
+            --command = 'hi Visual cterm=reverse',
+        --})
     end
 elseif vim.g.platform == "xterm" then
     vim.opt.termguicolors = false
     vim.opt.guicursor = ""
     vim.opt.t_Co = ""
-    vim.api.nvim_create_autocmd('ColorScheme', {
-        pattern = 'themer_dracula',
-        command = 'hi Visual cterm=reverse',
-    })
+    --vim.api.nvim_create_autocmd('ColorScheme', {
+        --pattern = 'themer_dracula',
+        --command = 'hi Visual cterm=reverse',
+    --})
 else
     vim.opt.termguicolors = true
 end
