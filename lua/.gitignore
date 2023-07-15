@@ -1,0 +1,15 @@
+/*
+/*/
+!/.gitignore
+!/.gitattributes
+
+!/keymaps.lua
+!/plugin_options.lua
+!/plugins.lua
+!/post_plugins.lua
+!/pre_plugins.lua
+!/settings.lua
+!/utilities.lua
+
+!/custom/
+!/platform/

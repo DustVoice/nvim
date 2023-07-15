@@ -2,7 +2,7 @@ HOME = os.getenv("HOME")
 
 vim.opt.compatible = false
 
-if string.match(vim.opt.shell["_value"], 'fish$') then
+if string.match(vim.opt.shell["_value"], 'fish$') or string.match(vim.opt.shell["_value"], 'nu$') then
     if vim.fn.executable('zsh') then
         vim.opt.shell = "zsh"
         vim.g.replacement_shell = "zsh"
@@ -36,20 +36,11 @@ if vim.g.platform == "linux" then
         vim.opt.termguicolors = true
     else
         vim.opt.termguicolors = false
-
-        --vim.api.nvim_create_autocmd('ColorScheme', {
-            --pattern = 'themer_dracula',
-            --command = 'hi Visual cterm=reverse',
-        --})
     end
 elseif vim.g.platform == "xterm" then
     vim.opt.termguicolors = false
     vim.opt.guicursor = ""
     vim.opt.t_Co = ""
-    --vim.api.nvim_create_autocmd('ColorScheme', {
-        --pattern = 'themer_dracula',
-        --command = 'hi Visual cterm=reverse',
-    --})
 else
     vim.opt.termguicolors = true
 end
@@ -115,7 +106,7 @@ vim.opt.linebreak = true
 vim.opt.list = true
 vim.opt.listchars = { trail = "·", tab = "•\\", extends = "⟩", precedes = "⟨" }
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false -- set this to true, if switching is used
 vim.opt.scrolloff = 1
 vim.opt.shiftwidth = 4
 vim.opt.shortmess = "a"
@@ -142,10 +133,10 @@ local config = {
     tex_items = "",
 
     use_airline = false,
-    use_alt_colorschemes = true,
-    use_arm_syntax = true,
-    use_asciidoctor = true,
-    use_asm_indent = true,
+    use_alt_colorschemes = false,
+    use_arm_syntax = false,
+    use_asciidoctor = false,
+    use_asm_indent = false,
     use_async = true,
     use_autocomplete = 0,
     use_bufkill = true,
@@ -153,12 +144,12 @@ local config = {
     use_clang_format = false,
     use_coc = false,
     use_comfortable_motion = false,
-    use_cpp = true,
+    use_cpp = false,
     use_fish = true,
     use_font = false,
     use_fswitch = true,
     use_fugitive = true,
-    use_gas = true,
+    use_gas = false,
     use_indentguides = false,
     use_javacomplete = false,
     use_latexmk = false,
@@ -242,18 +233,18 @@ vim.api.nvim_create_autocmd('FileType', {
 -- ===
 -- Don't schow relative numbers in insert mode, but show them in normal mode
 -- ===
-vim.api.nvim_create_autocmd({'BufWinEnter', 'BufEnter', 'FocusGained', 'InsertLeave' }, {
-    pattern = '*',
-    callback = function()
-        vim.opt.relativenumber = true
-    end,
-})
-vim.api.nvim_create_autocmd({'BufWinLeave', 'BufLeave', 'FocusLost', 'InsertEnter' }, {
-    pattern = '*',
-    callback = function()
-        vim.opt.relativenumber = false
-    end,
-})
+-- vim.api.nvim_create_autocmd({'BufWinEnter', 'BufEnter', 'FocusGained', 'InsertLeave' }, {
+--     pattern = '*',
+--     callback = function()
+--         vim.opt.relativenumber = true
+--     end,
+-- })
+-- vim.api.nvim_create_autocmd({'BufWinLeave', 'BufLeave', 'FocusLost', 'InsertEnter' }, {
+--     pattern = '*',
+--     callback = function()
+--         vim.opt.relativenumber = false
+--     end,
+-- })
 -- ===
 
 -- vim.cmd("hi LineNr guifg=#B0BEC5")
