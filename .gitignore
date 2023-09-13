@@ -3,17 +3,7 @@
 !/.gitignore
 !/.gitattributes
 
-!/.restore-permissions
-!/coc-settings.json
-!/custom.vim.example
-!/ginit.vim
 !/init.lua
-!/init.vim
-!/platform.vim.example
-!/TODO.txt
+!/NvChad
 
-!/autoload/
-!/colors/
 !/lua/
-!/pack/
-!/spell/

@@ -1,1 +1,0 @@
-You have to copy platform_template.vim to platform.vim and set your platform in it, so the appropriate settings can be adapted!

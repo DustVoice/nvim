@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-echo 'Adapting permissions of "."'
-chown -R $(whoami) .
-find . -path ./plugged -prune -o -type d -exec chmod 755 {} \;
-find . -path ./plugged -prune -o -type f -exec chmod 644 {} \;
-
-echo 'Adapting permissions of "./.restore-permissions"'
-chmod 755 ./.restore-permissions
