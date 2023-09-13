@@ -4,15 +4,15 @@ M.treesitter = {
   ensure_installed = {
     "vim",
     "lua",
-    -- "html",
-    -- "css",
-    -- "javascript",
-    -- "typescript",
-    -- "tsx",
+    "html",
+    "css",
+    "javascript",
+    "typescript",
+    "tsx",
     "c",
     "cpp",
-    -- "markdown",
-    -- "markdown_inline",
+    "markdown",
+    "markdown_inline",
   },
   indent = {
     enable = true,
@@ -20,9 +20,10 @@ M.treesitter = {
     --   "python"
     -- },
   },
-  -- prefer_git = true,
-  compilers = { "zig" },
-  auto_install = false,
+  -- command_extra_args = {
+  --   curl = { "--proxy", "http://ldiproxy.lsjv.rlp.de:8080"}
+  -- },
+  -- compilers = { "zig" },
 }
 
 M.mason = {
@@ -41,6 +42,9 @@ M.mason = {
     -- c/cpp stuff
     "clangd",
     "clang-format",
+
+    -- rust stuff
+    "rust-analyzer",
   },
 }
 

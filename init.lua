@@ -1,6 +1,6 @@
-local custom_init_path = vim.api.nvim_get_runtime_file("NvChad/init.lua", false)[1]
+local nvchad = vim.api.nvim_get_runtime_file("NvChad", false)[1]
 
-if custom_init_path then
-  package.path = './NvChad;./NvChad/lua/?/init.lua;./NvChad/lua/?.lua;' .. package.path
-  dofile(custom_init_path)
+if nvchad then
+  package.path = nvchad .. ';' .. nvchad .. '/lua/?/init.lua;' .. nvchad .. '/lua/?.lua;' .. package.path
+  dofile(nvchad .. "/init.lua")
 end
