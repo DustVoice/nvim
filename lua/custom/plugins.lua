@@ -4,7 +4,6 @@ local overrides = require("custom.configs.overrides")
 local plugins = {
 
   -- Override plugin definition options
-
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -15,17 +14,23 @@ local plugins = {
           require "custom.configs.null-ls"
         end,
       },
+      "williamboman/mason-lspconfig.nvim",
     },
     config = function()
       require "plugins.configs.lspconfig"
-      require "custom.configs.lspconfig"
+      -- Use mason-lspconfig hooks instead
+      -- require "custom.configs.lspconfig"
     end, -- Override to setup mason-lspconfig
   },
 
   -- override plugin configs
   {
-    "williamboman/mason.nvim",
-    opts = overrides.mason
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      opts = overrides.mason
+    },
+    opts = overrides.mason_lspconfig,
   },
 
   {

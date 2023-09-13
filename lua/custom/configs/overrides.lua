@@ -13,6 +13,8 @@ M.treesitter = {
     "cpp",
     "markdown",
     "markdown_inline",
+    "rust",
+    "svelte",
   },
   indent = {
     enable = true,
@@ -46,6 +48,31 @@ M.mason = {
     -- rust stuff
     "rust-analyzer",
   },
+}
+
+M.mason_lspconfig = {
+  ensure_installed = {},
+  automatic_installation = true,
+  handlers = {
+    function (server_name)
+      require("lspconfig")[server_name].setup{
+        on_attach = require("plugins.configs.lspconfig").on_attach,
+        capabilities = require("plugins.configs.lspconfig").capabilities,
+      }
+    end,
+
+    ["lua_ls"] = function ()
+        require("lspconfig").lua_ls.setup {
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { "vim" }
+                    }
+                }
+            }
+        }
+    end,
+  }
 }
 
 -- git support in nvimtree
