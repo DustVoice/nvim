@@ -13,7 +13,9 @@ return {
 
   { import = "astrocommunity.note-taking.neorg" },
 
+  { import = "astrocommunity.pack.clojure" },
   -- { import = "astrocommunity.pack.cs" },
+  -- { import = "astrocommunity.pack.go" },
   -- { import = "astrocommunity.pack.haskell" },
   { import = "astrocommunity.pack.julia" },
   { import = "astrocommunity.pack.lua" },
