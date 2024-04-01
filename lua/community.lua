@@ -6,7 +6,7 @@
 
 ---@type LazySpec
 return {
-  "AstroNvim/astrocommunity",
+  { "AstroNvim/astrocommunity" },
   { import = "astrocommunity.pack.lua" },
 
   { import = "astrocommunity.colorscheme.catppuccin" },
@@ -19,6 +19,7 @@ return {
   -- { import = "astrocommunity.pack.haskell" },
   { import = "astrocommunity.pack.julia" },
   { import = "astrocommunity.pack.markdown" },
+  -- { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.pack.toml" },
   { import = "astrocommunity.pack.typst" },
