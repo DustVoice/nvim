@@ -11,7 +11,10 @@ return {
 
   { import = "astrocommunity.colorscheme.catppuccin" },
 
-  { import = "astrocommunity.note-taking.neorg" },
+  { import = "astrocommunity.git.diffview-nvim" },
+  { import = "astrocommunity.git.neogit" },
+
+  -- { import = "astrocommunity.note-taking.neorg" },
 
   { import = "astrocommunity.pack.clojure" },
   -- { import = "astrocommunity.pack.cs" },
