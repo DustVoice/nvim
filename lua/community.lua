@@ -11,6 +11,8 @@ return {
 
   { import = "astrocommunity.colorscheme.catppuccin" },
 
+  { import = "editing-support.multiple-cursors-nvim" },
+
   { import = "astrocommunity.git.diffview-nvim" },
   { import = "astrocommunity.git.neogit" },
 
