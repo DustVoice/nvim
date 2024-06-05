@@ -11,6 +11,8 @@ return {
 
   { import = "astrocommunity.colorscheme.catppuccin" },
 
+  { import = "astrocommunity.code-runner.conjure" },
+
   -- { import = "astrocommunity.editing-support.multiple-cursors-nvim" },
   { import = "astrocommunity.editing-support.vim-visual-multi" },
 
