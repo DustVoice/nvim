@@ -13,6 +13,9 @@ return {
 
   { import = "astrocommunity.code-runner.conjure" },
 
+  { import = "astrocommunity.diagnostics.lsp_lines-nvim" },
+  { import = "astrocommunity.diagnostics.trouble-nvim" },
+
   -- { import = "astrocommunity.editing-support.multiple-cursors-nvim" },
   { import = "astrocommunity.editing-support.undotree" },
   { import = "astrocommunity.editing-support.vim-visual-multi" },
