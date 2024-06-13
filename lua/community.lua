@@ -14,6 +14,7 @@ return {
   { import = "astrocommunity.code-runner.conjure" },
 
   -- { import = "astrocommunity.editing-support.multiple-cursors-nvim" },
+  { import = "astrocommunity.editing-support.undotree" },
   { import = "astrocommunity.editing-support.vim-visual-multi" },
 
   { import = "astrocommunity.git.diffview-nvim" },
