@@ -25,4 +25,12 @@ return {
       return opts
     end,
   },
+  {
+    "AstroNvim/astrocore",
+    opts = {
+      diagnostics = {
+        virtual_text = false,
+      },
+    },
+  },
 }
