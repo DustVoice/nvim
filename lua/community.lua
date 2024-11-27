@@ -25,6 +25,7 @@ return {
 
   -- { import = "astrocommunity.note-taking.neorg" },
 
+  { import = "astrocommunity.pack.astro" },
   { import = "astrocommunity.pack.clojure" },
   -- { import = "astrocommunity.pack.cs" },
   -- { import = "astrocommunity.pack.dart" },
