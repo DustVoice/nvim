@@ -30,6 +30,7 @@ return {
   { import = "astrocommunity.pack.dart" },
   -- { import = "astrocommunity.pack.go" },
   -- { import = "astrocommunity.pack.haskell" },
+  { import = "astrocommunity.pack.jj" },
   { import = "astrocommunity.pack.julia" },
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.python-ruff" },
