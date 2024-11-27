@@ -1,4 +1,4 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
@@ -24,7 +24,6 @@ return {
       virtual_text = true,
       underline = true,
     },
-    -- vim options can be configured here
     options = {
       opt = { -- vim.opt.<key>
         relativenumber = true, -- sets vim.opt.relativenumber
@@ -34,7 +33,11 @@ return {
         wrap = false, -- sets vim.opt.wrap
       },
       g = { -- vim.g.<key>
-        -- configure global vim variables (vim.g)
+        ["conjure#client#clojure#nrepl#connection#auto_repl#enabled"] = true,
+        ["conjure#client#clojure#nrepl#connection#auto_repl#hidden"] = false,
+        ["conjure#client#clojure#nrepl#connection#auto_repl#cmd"] = "bb nrepl-server localhost:$port",
+        ["conjure#client#clojure#nrepl#eval#auto_require"] = true,
+        ["hy_enable_conceal"] = 1,
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
       },
@@ -62,8 +65,9 @@ return {
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
-        -- ["<Leader>b"] = { desc = "Buffers" },
-
+        ["<Leader>b"] = { desc = "Buffers" },
+      },
+      t = {
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
       },
