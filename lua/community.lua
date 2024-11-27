@@ -30,6 +30,7 @@ return {
   -- { import = "astrocommunity.pack.dart" },
   -- { import = "astrocommunity.pack.go" },
   -- { import = "astrocommunity.pack.haskell" },
+  { import = "astrocommunity.pack.html-css" },
   { import = "astrocommunity.pack.jj" },
   { import = "astrocommunity.pack.julia" },
   { import = "astrocommunity.pack.markdown" },
@@ -37,6 +38,7 @@ return {
   { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.pack.toml" },
   { import = "astrocommunity.pack.typst" },
+  { import = "astrocommunity.pack.yaml" },
 
   -- { import = "astrocommunity.utility.noice-nvim" },
 
