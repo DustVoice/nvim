@@ -31,6 +31,12 @@ return {
       diagnostics = {
         virtual_text = false,
       },
+      filetypes = {
+        extension = {
+          bb = "clojure",
+          clj_kondo = "clojure",
+        },
+      },
     },
   },
   { "max397574/better-escape.nvim", enabled = false },
