@@ -5,6 +5,11 @@
 
 ---@type LazySpec
 return {
+  { "abhishekmukherg/xonsh-vim" },
+  {
+    "rafikdraoui/jj-diffconflicts",
+    cmd = { "JJDiffConflicts" },
+  },
   {
     "goolord/alpha-nvim",
     opts = function(_, opts)
