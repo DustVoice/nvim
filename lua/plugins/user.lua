@@ -5,11 +5,13 @@
 
 ---@type LazySpec
 return {
+  { "hylang/vim-hy" },
   { "abhishekmukherg/xonsh-vim" },
   {
     "rafikdraoui/jj-diffconflicts",
     cmd = { "JJDiffConflicts" },
   },
+  { "max397574/better-escape.nvim", enabled = false },
   {
     "goolord/alpha-nvim",
     opts = function(_, opts)
@@ -30,19 +32,4 @@ return {
       return opts
     end,
   },
-  {
-    "AstroNvim/astrocore",
-    opts = {
-      diagnostics = {
-        virtual_text = false,
-      },
-      filetypes = {
-        extension = {
-          bb = "clojure",
-          clj_kondo = "clojure",
-        },
-      },
-    },
-  },
-  { "max397574/better-escape.nvim", enabled = false },
 }

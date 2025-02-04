@@ -21,7 +21,7 @@ return {
     },
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
-      virtual_text = true,
+      virtual_text = false,
       underline = true,
     },
     options = {
@@ -40,6 +40,12 @@ return {
         ["hy_enable_conceal"] = 1,
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
+      },
+    },
+    filetypes = {
+      extension = {
+        bb = "clojure",
+        clj_kondo = "clojure",
       },
     },
     -- Mappings can be configured through AstroCore as well.
