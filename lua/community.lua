@@ -7,25 +7,35 @@
 ---@type LazySpec
 return {
   { "AstroNvim/astrocommunity" },
-  { import = "astrocommunity.pack.lua" },
 
+  -- Colorschemes
   { import = "astrocommunity.colorscheme.catppuccin" },
 
+  -- Code Runners
   { import = "astrocommunity.code-runner.conjure" },
 
+  -- Completion
+  { import = "astrocommunity.completion.avante-nvim" },
+  { import = "astrocommunity.completion.copilot-lua" },
+
+  -- Diagnostics
   { import = "astrocommunity.diagnostics.lsp_lines-nvim" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
 
+  -- Editing Support
   -- { import = "astrocommunity.editing-support.multiple-cursors-nvim" },
   { import = "astrocommunity.editing-support.nvim-parinfer" },
   { import = "astrocommunity.editing-support.undotree" },
   { import = "astrocommunity.editing-support.vim-visual-multi" },
 
+  -- Git
   { import = "astrocommunity.git.diffview-nvim" },
   { import = "astrocommunity.git.neogit" },
 
+  -- Note Taking
   -- { import = "astrocommunity.note-taking.neorg" },
 
+  -- Language Packs
   { import = "astrocommunity.pack.astro" },
   { import = "astrocommunity.pack.chezmoi" },
   { import = "astrocommunity.pack.clojure" },
@@ -45,6 +55,7 @@ return {
   { import = "astrocommunity.pack.typst" },
   { import = "astrocommunity.pack.yaml" },
 
+  -- Utility
   -- { import = "astrocommunity.utility.noice-nvim" },
 
   -- import/override with your plugins folder

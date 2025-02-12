@@ -5,6 +5,20 @@
 
 ---@type LazySpec
 return {
+  {
+    "yetone/avante.nvim",
+    opts = {
+      provider = "copilot",
+      vendors = {
+        ollama = {
+          __inherited_from = "openai",
+          api_key_name = "OLLAMA_API_KEY",
+          endpoint = "http://127.0.0.1:11434/v1",
+          model = "MFDoom/deepseek-coder-v2-tool-calling",
+        },
+      },
+    },
+  },
   { "hylang/vim-hy" },
   { "abhishekmukherg/xonsh-vim" },
   {
