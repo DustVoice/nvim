@@ -54,6 +54,7 @@ return {
   { import = "astrocommunity.pack.toml" },
   { import = "astrocommunity.pack.typst" },
   { import = "astrocommunity.pack.yaml" },
+  { import = "astrocommunity.pack.zig" },
 
   -- Utility
   -- { import = "astrocommunity.utility.noice-nvim" },
