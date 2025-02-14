@@ -16,7 +16,7 @@ return {
 
   -- Completion
   { import = "astrocommunity.completion.avante-nvim" },
-  { import = "astrocommunity.completion.copilot-lua" },
+  { import = "astrocommunity.completion.copilot-lua-cmp" },
 
   -- Diagnostics
   { import = "astrocommunity.diagnostics.lsp_lines-nvim" },
