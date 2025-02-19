@@ -42,6 +42,7 @@ return {
   -- { import = "astrocommunity.pack.cs" },
   -- { import = "astrocommunity.pack.dart" },
   { import = "astrocommunity.pack.elixir-phoenix" },
+  { import = "astrocommunity.pack.gleam" },
   -- { import = "astrocommunity.pack.go" },
   -- { import = "astrocommunity.pack.haskell" },
   -- { import = "astrocommunity.pack.html-css" },
