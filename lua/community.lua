@@ -59,6 +59,9 @@ return {
   { import = "astrocommunity.pack.yaml" },
   { import = "astrocommunity.pack.zig" },
 
+  -- Register
+  { import = "astrocommunity.register.nvim-neoclip-lua" },
+
   -- Utility
   -- { import = "astrocommunity.utility.noice-nvim" },
 
