@@ -23,6 +23,7 @@ return {
   { import = "astrocommunity.diagnostics.trouble-nvim" },
 
   -- Editing Support
+  { import = "astrocommunity.editing-support.conform-nvim" },
   -- { import = "astrocommunity.editing-support.multiple-cursors-nvim" },
   { import = "astrocommunity.editing-support.nvim-parinfer" },
   { import = "astrocommunity.editing-support.undotree" },
@@ -51,7 +52,7 @@ return {
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.mdx" },
-  -- { import = "astrocommunity.pack.ocaml" },
+  { import = "astrocommunity.pack.ocaml" },
   -- { import = "astrocommunity.pack.python-ruff" },
   { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.pack.toml" },
