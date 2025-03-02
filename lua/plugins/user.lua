@@ -5,6 +5,7 @@
 
 ---@type LazySpec
 return {
+  { "luizribeiro/vim-cooklang" },
   {
     "yetone/avante.nvim",
     opts = {

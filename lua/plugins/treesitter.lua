@@ -7,6 +7,7 @@ return {
   "nvim-treesitter/nvim-treesitter",
   opts = {
     ensure_installed = {
+      "cooklang",
       "lua",
       "norg",
       "vim",
