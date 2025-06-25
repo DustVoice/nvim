@@ -31,11 +31,11 @@ return {
 
   -- Git
   { import = "astrocommunity.git.diffview-nvim" },
-  { import = "astrocommunity.git.mini-diff" },
   { import = "astrocommunity.git.neogit" },
 
   -- Note Taking
   -- { import = "astrocommunity.note-taking.neorg" },
+  { import = "astrocommunity.note-taking.obsidian-nvim" },
 
   -- Language Packs
   { import = "astrocommunity.pack.astro" },
