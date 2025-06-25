@@ -31,6 +31,7 @@ return {
 
   -- Git
   { import = "astrocommunity.git.diffview-nvim" },
+  { import = "astrocommunity.git.mini-diff" },
   { import = "astrocommunity.git.neogit" },
 
   -- Note Taking
