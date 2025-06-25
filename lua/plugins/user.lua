@@ -6,6 +6,7 @@
 
 ---@type LazySpec
 return {
+  { "julienvincent/hunk.nvim", cmd = { "DiffEditor" } },
   { "luizribeiro/vim-cooklang" },
   {
     "yetone/avante.nvim",
